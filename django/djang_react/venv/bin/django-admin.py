@@ -1,4 +1,4 @@
-#!/home/anrao3/cse442-semester-project-tapp/django/djang_react/venv/bin/python3
+#!/home/huss/TApp/cse442-semester-project-tapp/django/djang_react/venv/bin/python3
 from django.core import management
 
 if __name__ == "__main__":

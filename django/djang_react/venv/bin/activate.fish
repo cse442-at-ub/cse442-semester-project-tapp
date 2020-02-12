@@ -29,7 +29,7 @@ end
 # unset irrelevant variables
 deactivate nondestructive
 
-set -gx VIRTUAL_ENV "/home/anrao3/cse442-semester-project-tapp/django/djang_react/venv"
+set -gx VIRTUAL_ENV "/home/huss/TApp/cse442-semester-project-tapp/django/djang_react/venv"
 
 set -gx _OLD_VIRTUAL_PATH $PATH
 set -gx PATH "$VIRTUAL_ENV/bin" $PATH

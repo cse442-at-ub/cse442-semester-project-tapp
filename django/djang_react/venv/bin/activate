@@ -37,7 +37,7 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
-VIRTUAL_ENV="/home/huss/TApp/cse442-semester-project-tapp/django/djang_react/venv"
+VIRTUAL_ENV="/home/anrao3/cse442-semester-project-tapp/django/djang_react/venv"
 export VIRTUAL_ENV
 
 _OLD_VIRTUAL_PATH="$PATH"

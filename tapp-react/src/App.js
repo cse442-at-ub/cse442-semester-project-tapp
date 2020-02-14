@@ -7,6 +7,7 @@ import Button from 'react-bootstrap/Button';
 import FormControl from 'react-bootstrap/FormControl'
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
+import Alert from 'react-bootstrap/Alert';
 
 import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
@@ -41,19 +42,23 @@ function App() {
 */
 
 function SignupModal(props) {
+  const [signedUp, setSignedUp] = React.useState(false)
   return (
     <Modal {...props} size="lg" centered>
       <Modal.Header closeButton>
         <Modal.Title> Signup </Modal.Title>
       </Modal.Header>
       <Modal.Body>
+	<Alert variant="success" show={signedUp} onClose={()=>setSignedUp(false)} dismissible>
+	  <Alert.Heading> An email verification has been sent to your email </Alert.Heading>
+	</Alert>
 	<Form>
 	  <Form.Group controlId="formBasicEmail">
 	    <Form.Label> Name </Form.Label>
 	    <Form.Control type="email" placeholder="example@domain.com" />
 	  </Form.Group>
 	  <Form.Group controlId="formBasicPassword">
-	    <Form.Label> Name </Form.Label>
+	    <Form.Label> Password </Form.Label>
 	    <Form.Control type="password" placeholder="Password" />
 	  </Form.Group>
 	  <Form.Group controlId="formBasicText">
@@ -64,7 +69,7 @@ function SignupModal(props) {
 	    <Form.Label> Course </Form.Label>
 	    <Form.Control type="text" placeholder="Course" />
 	  </Form.Group>
-	  <Button variant="primary"> Submit </Button>
+	  <Button variant="primary" onClick={()=> setSignedUp(true)}> Submit </Button>
 	</Form>
       </Modal.Body>
       <Modal.Footer>
@@ -87,7 +92,7 @@ function LoginModal(props) {
 	    <Form.Control type="email" placeholder="example@domain.com" />
 	  </Form.Group>
 	  <Form.Group controlId="formBasicPassword">
-	    <Form.Label> Name </Form.Label>
+	    <Form.Label> Password </Form.Label>
 	    <Form.Control type="password" placeholder="Password" />
 	  </Form.Group>
 	  <Button variant="primary"> Submit </Button>

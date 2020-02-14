@@ -43,6 +43,20 @@ function App() {
 
 function SignupModal(props) {
   const [signedUp, setSignedUp] = React.useState(false)
+  const [signedValid, setSignedValid] = React.useState(false)
+  const [isLoading, setLoading] = React.useState(false)
+
+  const handleSubmit = event => {
+	  const form = 
+		  event.currentTarget;
+	  if (form.checkValidity() === false) { event.preventDefault(); event.stopPropagation();}
+	  else{
+	  setSignedUp(true);
+	  setLoading(true);
+	  }
+	  setSignedValid(true);
+  };
+
   return (
     <Modal {...props} size="lg" centered>
       <Modal.Header closeButton>
@@ -52,24 +66,28 @@ function SignupModal(props) {
 	<Alert variant="success" show={signedUp} onClose={()=>setSignedUp(false)} dismissible>
 	  <Alert.Heading> An email verification has been sent to your email </Alert.Heading>
 	</Alert>
-	<Form>
+	<Form noValidate validated = {signedValid} onSubmit = {handleSubmit}>
 	  <Form.Group controlId="formBasicEmail">
 	    <Form.Label> Name </Form.Label>
-	    <Form.Control type="email" placeholder="example@domain.com" />
+	    <Form.Control type="email" placeholder="example@domain.com" required />
+	    <Form.Control.Feedback type="invalid"> Please enter a valid email! </Form.Control.Feedback> 
 	  </Form.Group>
 	  <Form.Group controlId="formBasicPassword">
 	    <Form.Label> Password </Form.Label>
-	    <Form.Control type="password" placeholder="Password" />
+	    <Form.Control type="password" placeholder="Password" required/>
+	    <Form.Control.Feedback type="invalid"> Please enter a password! </Form.Control.Feedback> 
 	  </Form.Group>
 	  <Form.Group controlId="formBasicText">
 	    <Form.Label> Name </Form.Label>
-	    <Form.Control type="text" placeholder="Name" />
+	    <Form.Control type="text" placeholder="Name" required/>
+	    <Form.Control.Feedback type="invalid"> Please enter a Name! </Form.Control.Feedback> 
 	  </Form.Group>
 	  <Form.Group controlId="formBasicText">
 	    <Form.Label> Course </Form.Label>
-	    <Form.Control type="text" placeholder="Course" />
+	    <Form.Control type="text" placeholder="Course" required/>
+	    <Form.Control.Feedback type="invalid"> Please enter a Course Name! </Form.Control.Feedback> 
 	  </Form.Group>
-	  <Button variant="primary" onClick={()=> setSignedUp(true)}> Submit </Button>
+	  <Button variant="primary" type="submit" disabled={isLoading}> {isLoading ? 'Loading...':'Submit'} </Button>
 	</Form>
       </Modal.Body>
       <Modal.Footer>
@@ -80,20 +98,28 @@ function SignupModal(props) {
 }
 
 function LoginModal(props) {
+  const [signedUp, setSignedUp] = React.useState(false)
+  const [signedValid, setSignedValid] = React.useState(false)
+  const handleSubmit = event => {
+	  const form = 
+		  event.currentTarget;
+	  if (form.checkValidity() === false) { event.preventDefault(); event.stopPropagation();}
+	  setSignedValid(true);
+  };
   return (
     <Modal {...props} size="lg" centered>
       <Modal.Header closeButton>
         <Modal.Title> Login </Modal.Title>
       </Modal.Header>
       <Modal.Body>
-	<Form>
+	<Form noValid validated={handleSubmit}>
 	  <Form.Group controlId="formBasicEmail">
 	    <Form.Label> Name </Form.Label>
-	    <Form.Control type="email" placeholder="example@domain.com" />
+	    <Form.Control type="email" placeholder="example@domain.com" required/>
 	  </Form.Group>
 	  <Form.Group controlId="formBasicPassword">
 	    <Form.Label> Password </Form.Label>
-	    <Form.Control type="password" placeholder="Password" />
+	    <Form.Control type="password" placeholder="Password" required/>
 	  </Form.Group>
 	  <Button variant="primary"> Submit </Button>
 	</Form>

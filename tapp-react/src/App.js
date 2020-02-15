@@ -51,8 +51,9 @@ function SignupModal(props) {
 		  event.currentTarget;
 	  if (form.checkValidity() === false) { event.preventDefault(); event.stopPropagation();}
 	  else{
-	  setSignedUp(true);
-	  setLoading(true);
+            event.preventDefault()
+	    setSignedUp(true);
+	    setLoading(true);
 	  }
 	  setSignedValid(true);
   };
@@ -66,7 +67,7 @@ function SignupModal(props) {
 	<Alert variant="success" show={signedUp} onClose={()=>setSignedUp(false)} dismissible>
 	  <Alert.Heading> An email verification has been sent to your email </Alert.Heading>
 	</Alert>
-	<Form noValidate validated = {signedValid} onSubmit = {handleSubmit}>
+	<Form noValidate onSubmit = {handleSubmit} validated = {signedValid}>
 	  <Form.Group controlId="formBasicEmail">
 	    <Form.Label> Name </Form.Label>
 	    <Form.Control type="email" placeholder="example@domain.com" required />
@@ -100,19 +101,27 @@ function SignupModal(props) {
 function LoginModal(props) {
   const [signedUp, setSignedUp] = React.useState(false)
   const [signedValid, setSignedValid] = React.useState(false)
+  const [isLoading, setLoading] = React.useState(false)
+
   const handleSubmit = event => {
 	  const form = 
 		  event.currentTarget;
 	  if (form.checkValidity() === false) { event.preventDefault(); event.stopPropagation();}
+	  else{
+            event.preventDefault()
+	    setSignedUp(true);
+	    setLoading(true);
+	  }
 	  setSignedValid(true);
   };
+
   return (
     <Modal {...props} size="lg" centered>
       <Modal.Header closeButton>
         <Modal.Title> Login </Modal.Title>
       </Modal.Header>
       <Modal.Body>
-	<Form noValid validated={handleSubmit}>
+	<Form noValid onSubmit={handleSubmit} validated = {signedValid}>
 	  <Form.Group controlId="formBasicEmail">
 	    <Form.Label> Name </Form.Label>
 	    <Form.Control type="email" placeholder="example@domain.com" required/>
@@ -121,7 +130,7 @@ function LoginModal(props) {
 	    <Form.Label> Password </Form.Label>
 	    <Form.Control type="password" placeholder="Password" required/>
 	  </Form.Group>
-	  <Button variant="primary"> Submit </Button>
+	  <Button variant="primary" type="submit" disabled={isLoading}> {isLoading ? 'Loading...':'Submit'} </Button>
 	</Form>
       </Modal.Body>
       <Modal.Footer>

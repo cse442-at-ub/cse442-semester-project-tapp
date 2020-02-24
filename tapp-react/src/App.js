@@ -69,7 +69,7 @@ function SignupModal(props) {
 	</Alert>
 	<Form noValidate onSubmit = {handleSubmit} validated = {signedValid}>
 	  <Form.Group controlId="formBasicEmail">
-	    <Form.Label> Name </Form.Label>
+	    <Form.Label> E-mail </Form.Label>
 	    <Form.Control type="email" placeholder="example@domain.com" required />
 	    <Form.Control.Feedback type="invalid"> Please enter a valid email! </Form.Control.Feedback> 
 	  </Form.Group>
@@ -123,7 +123,7 @@ function LoginModal(props) {
       <Modal.Body>
 	<Form noValid onSubmit={handleSubmit} validated = {signedValid}>
 	  <Form.Group controlId="formBasicEmail">
-	    <Form.Label> Name </Form.Label>
+	    <Form.Label> E-mail </Form.Label>
 	    <Form.Control type="email" placeholder="example@domain.com" required/>
 	  </Form.Group>
 	  <Form.Group controlId="formBasicPassword">
@@ -156,7 +156,6 @@ function App() {
       <Nav className="ml-auto">
           <Button variant="info" className="mx-2 ml-md-0" onClick={toggleLogin} > Login </Button>
           <Button variant="info" className="mx-2 ml-md-0" onClick={toggleSign}> Register </Button>
-          <Button variant="info" className="ml-2 ml-md-0"> Gamer </Button>
       </Nav>
       </Navbar.Collapse>
     </Navbar>

@@ -15,7 +15,9 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
+from .api import UserViewSet
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
+    url(r'^api/users', UserViewSet, 'users'),
 ]

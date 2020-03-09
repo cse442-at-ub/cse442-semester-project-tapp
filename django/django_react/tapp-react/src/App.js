@@ -26,6 +26,7 @@ import { getStudents } from './actions/students';
 import store from './store'
 import { createStore } from "redux";
 import reducer from "./reducers/students.js";
+import SignupModal from './Form';
 
 
 /*
@@ -51,6 +52,7 @@ function App() {
 }
 */
 
+/*
 function SignupModal(props) {
   const [signedUp, setSignedUp] = React.useState(false)
   const [signedValid, setSignedValid] = React.useState(false)
@@ -107,6 +109,7 @@ function SignupModal(props) {
     </Modal>
   );
 }
+*/
 
 function LoginModal(props) {
   const dispatch = useDispatch()

@@ -27,6 +27,7 @@ import store from './store'
 import { createStore } from "redux";
 import reducer from "./reducers/students.js";
 import SignupModal from './Form';
+import LoginModal from './Login';
 
 
 /*
@@ -110,51 +111,6 @@ function SignupModal(props) {
   );
 }
 */
-
-function LoginModal(props) {
-  const dispatch = useDispatch()
-  const query = useSelector(state => state.students.students)
-  const [signedUp, setSignedUp] = React.useState(false)
-  const [signedValid, setSignedValid] = React.useState(false)
-  const [isLoading, setLoading] = React.useState(false)
-
-  const handleSubmit = event => {
-	  const form = 
-		  event.currentTarget;
-	  dispatch({ type: 'GET_STUDENTS'})
-	  if (form.checkValidity() === false) { event.preventDefault(); event.stopPropagation();}
-	  else{
-            event.preventDefault()
-	    setSignedUp(true);
-	    setLoading(true);
-	  }
-	  setSignedValid(true);
-  };
-
-  return (
-    <Modal {...props} size="lg" centered>
-      <Modal.Header closeButton>
-        <Modal.Title> Login </Modal.Title>
-      </Modal.Header>
-      <Modal.Body>
-	<Form noValid onSubmit={handleSubmit} validated = {signedValid}>
-	  <Form.Group controlId="formBasicEmail">
-	    <Form.Label> E-mail </Form.Label>
-	    <Form.Control type="email" placeholder="example@domain.com" required/>
-	  </Form.Group>
-	  <Form.Group controlId="formBasicPassword">
-	    <Form.Label> Password </Form.Label>
-	    <Form.Control type="password" placeholder="Password" required/>
-	  </Form.Group>
-	  <Button variant="primary" type="submit" disabled={isLoading}> {isLoading ? 'Loading...':'Submit'} </Button>
-	</Form>
-      </Modal.Body>
-      <Modal.Footer>
-        <Button onClick={props.onHide}> Close </Button>
-      </Modal.Footer>
-    </Modal>
-  );
-}
 
 class App extends Component{
 

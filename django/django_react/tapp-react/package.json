@@ -40,5 +40,5 @@
     ]
   },
   "homepage": "https://www-student.cse.buffalo.edu/CSE442-542/2020-spring/cse-442h/tapp/build/",
-  "proxy": "http://localhost:8000" 
+  "proxy": "http://localhost:8000"
 }

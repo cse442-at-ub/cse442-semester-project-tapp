@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component, useEffect } from 'react';
 import Nav from 'react-bootstrap/Nav'
 import Navbar from 'react-bootstrap/Navbar';
 
@@ -17,6 +17,12 @@ import Typist from 'react-typist';
 
 import 'bootstrap/dist/css/bootstrap.min.css'
 import "./styles.css";
+
+import { Provider } from 'react-redux';
+import { useDispatch, useSelector, connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { getStudents } from './actions/students';
+
 
 /*
 function App() {
@@ -140,12 +146,20 @@ function LoginModal(props) {
   );
 }
 
-function App() {
+function App(props){
   const [login, setLogin] = React.useState(false);
   const [sign, setSign] = React.useState(false);
 
   const toggleLogin = () => setLogin(!login);
   const toggleSign = () => setSign(!sign);
+
+  const dispatch = useDispatch()
+  const query = useSelector(state => state.students.students)
+  
+  useEffect(() => {
+    dispatch({ type: 'GET_STUDENTS', payload: query})
+  });
+
   return ( 
     <div style={{background: "#596869"}} id="main">
     <Row>
@@ -182,4 +196,8 @@ function App() {
   )
 }
 
-export default App;
+const mapStateToProps = state => ({
+  students: state.students.students
+});
+
+export default connect(mapStateToProps, { getStudents }) (App);

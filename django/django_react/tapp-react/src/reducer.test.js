@@ -11,4 +11,12 @@ describe( 'user get reducer', () => {
       reducer(initialState,
       {
         type: 'GET_STUDENTS'})).toMatchSnapshot()})
+});
+
+describe( 'User post reducer', () => {
+  it('should handle ADD_USER', () => {
+    expect(
+      reducer(initialState,
+      {
+        type: 'ADD_USER'})).toMatchSnapshot()})
 })

@@ -4,7 +4,7 @@ import { GET_STUDENTS } from './types';
 
 //GET STUDENTS
 export const getStudents = () => dispatch => {
-  axios.get('http://127.0.0.1:8000/api/users')
+  axios.get('http://localhost:3000/api/users/')
   .then(res => {
     dispatch({
       type: GET_STUDENTS,

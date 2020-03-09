@@ -23,6 +23,10 @@ import { useDispatch, useSelector, connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { getStudents } from './actions/students';
 
+import store from './store'
+import { createStore } from "redux";
+import reducer from "./reducers/students.js";
+
 
 /*
 function App() {
@@ -105,6 +109,8 @@ function SignupModal(props) {
 }
 
 function LoginModal(props) {
+  const dispatch = useDispatch()
+  const query = useSelector(state => state.students.students)
   const [signedUp, setSignedUp] = React.useState(false)
   const [signedValid, setSignedValid] = React.useState(false)
   const [isLoading, setLoading] = React.useState(false)
@@ -112,6 +118,7 @@ function LoginModal(props) {
   const handleSubmit = event => {
 	  const form = 
 		  event.currentTarget;
+	  dispatch({ type: 'GET_STUDENTS'})
 	  if (form.checkValidity() === false) { event.preventDefault(); event.stopPropagation();}
 	  else{
             event.preventDefault()
@@ -146,21 +153,38 @@ function LoginModal(props) {
   );
 }
 
-function App(props){
-  const [login, setLogin] = React.useState(false);
-  const [sign, setSign] = React.useState(false);
+class App extends Component{
 
-  const toggleLogin = () => setLogin(!login);
-  const toggleSign = () => setSign(!sign);
+  constructor(props) {
+    super(props);
+    this.state = {
+      login: false,
+      sign: false
+    };
+    this.toggleLogin = this.toggleLogin.bind(this);
+    this.toggleSign = this.toggleSign.bind(this);
+  }
 
-  const dispatch = useDispatch()
-  const query = useSelector(state => state.students.students)
-  
-  useEffect(() => {
-    dispatch({ type: 'GET_STUDENTS', payload: query})
-  });
+  componentDidMount() {
+    this.props.getStudents();
+  }
 
-  return ( 
+  toggleLogin = () => {
+    this.setState({
+      login: !this.state.login
+    });
+  };
+
+  toggleSign = () => {
+    this.setState({
+      sign: !this.state.sign
+    });
+  };
+
+  render() { 
+    const { login, sign } = this.state;
+    
+    return (
     <div style={{background: "#596869"}} id="main">
     <Row>
     <Navbar style={{backgroundColor: '#36453b'}} variant="dark" expand="lg" fixed="top" fluid>
@@ -168,8 +192,8 @@ function App(props){
       <Navbar.Toggle aria-controls="response-navbar-nav" />
       <Navbar.Collapse id="responsive-navbar-nav">
       <Nav className="ml-auto">
-          <Button variant="info" className="mx-2 ml-md-0" onClick={toggleLogin} > Login </Button>
-          <Button variant="info" className="mx-2 ml-md-0" onClick={toggleSign}> Register </Button>
+          <Button variant="info" className="mx-2 ml-md-0" onClick={this.toggleLogin} > Login </Button>
+          <Button variant="info" className="mx-2 ml-md-0" onClick={this.toggleSign}> Register </Button>
       </Nav>
       </Navbar.Collapse>
     </Navbar>
@@ -186,18 +210,22 @@ function App(props){
     </Typist>
     </Row>
     <Row className="justify-content-center"> 
-    <Button onClick={toggleSign} variant="info outline-warning" size="lg"> Sign Up </Button>
+    <Button onClick={this.toggleSign} variant="info outline-warning" size="lg"> Sign Up </Button>
 
-    <SignupModal show={sign} onHide={toggleSign} />
-    <LoginModal show={login} onHide={toggleLogin} />
+    <SignupModal show={this.state.sign} onHide={this.toggleSign} />
+    <LoginModal show={this.state.login} onHide={this.toggleLogin} />
 
     </Row>
     </div>
-  )
+    );
+  }
 }
 
+App.propTypes = {
+        students: PropTypes.array.isRequired
+}
 const mapStateToProps = state => ({
   students: state.students.students
 });
 
-export default connect(mapStateToProps, { getStudents }) (App);
+export default connect(mapStateToProps, {getStudents})(App);

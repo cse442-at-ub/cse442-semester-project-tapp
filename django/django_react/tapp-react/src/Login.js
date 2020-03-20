@@ -23,7 +23,7 @@ import { createstore } from "redux";
 import reducer from "./reducers/students.js";
 import { getStudents } from './actions/students';
 
-class LoginModal extends Component  {
+export class LoginModal extends Component  {
 
     constructor(props) {
     super(props)
@@ -46,6 +46,16 @@ class LoginModal extends Component  {
     this.toggleLoginAlertSucc = this.toggleLoginAlertSucc.bind(this);
   }
 
+  componentDidUpdate(prevProps) {
+    const {error, alert } = this.props;
+    if(error != prevProps.error) {
+     if(this.props.error.msg.email) {this.setState({emailValid: false,emailMessage: this.props.error.msg.email.join()})}
+     else {this.state.emailValid=true;this.state.emailMessage=""}
+     if(this.props.error.msg.password) {this.setState({passValid: false, passMessage: this.props.error.msg.pass.join()})}
+     else {this.state.passValid=true;this.state.passMessage=""}
+    }
+  };
+  
   toggleSignedUp = () => {
     this.setState({
       signedUp: !this.state.signedUp
@@ -89,16 +99,14 @@ class LoginModal extends Component  {
 	  else{
             event.preventDefault()
 	    this.toggleSignedUp(true);
-	    this.toggleIsLoading(true);
     	    this.props.getStudents();
-            const res = this.props.students.filter(student => student.email == form.elements.email.value);
+            const res = this.props.students.filter(student => (student.email === form.elements.email.value));
 	    if (res.length == 0){
-	      this.toggleLoginAlertSucc(false);
+	      this.toggleLoginAlertFail(false);
 	    }
 	    else {
-	      this.toggleLoginAlertFail(true);
+	      this.toggleLoginAlertSucc(true);
 	    }
-	    this.toggleIsLoading(false);
 	  }
 	  this.toggleSignedValid(true);
   };
@@ -110,7 +118,7 @@ class LoginModal extends Component  {
         <Modal.Title> Login </Modal.Title>
       </Modal.Header>
       <Modal.Body>
-          <Alert variant="success" show={this.state.loginAlertF} dismissible>
+          <Alert variant="danger" show={this.state.loginAlertF} dismissible>
             <Alert.Heading> Login Failed </Alert.Heading>
           </Alert>
           <Alert variant="success" show={this.state.loginAlertS} dismissible>
@@ -138,10 +146,12 @@ class LoginModal extends Component  {
 
 LoginModal.propTypes = {
         students: PropTypes.array.isRequired
+        error: PropTypes.object.isRequired
 }
 
 const mapStateToProps = state => ({
   students: state.students.students
+  error: state.errors
 });
 
 export default connect(mapStateToProps, {getStudents})(LoginModal);

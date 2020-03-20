@@ -145,12 +145,12 @@ export class LoginModal extends Component  {
 }
 
 LoginModal.propTypes = {
-        students: PropTypes.array.isRequired
+        students: PropTypes.array.isRequired,
         error: PropTypes.object.isRequired
 }
 
 const mapStateToProps = state => ({
-  students: state.students.students
+  students: state.students.students,
   error: state.errors
 });
 

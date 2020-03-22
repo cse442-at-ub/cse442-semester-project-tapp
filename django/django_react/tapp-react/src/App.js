@@ -1,24 +1,28 @@
-import React, { Component, useEffect } from 'react';
-import Nav from 'react-bootstrap/Nav'
-import Navbar from 'react-bootstrap/Navbar';
-
-import store from './store'
-import { createStore } from "redux";
-import reducer from "./reducers/students.js";
-import TopBar from './topbar';
+import React, { Component } from 'react';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link
+} from "react-router-dom";
+import "./styles.css";
 import LandingPage from './LandingPage.js';
 import Dashboard from './Dashboard.js';
 
 export class App extends Component{
-  constructor(props) {
-    super(props);
-  }
-
   render() { 
     return (
 	<>
-	<LandingPage />
-	<Dashboard />
+	<Router>
+	<Switch>
+          <Route exact path="/">
+	  <LandingPage />
+          </Route>
+          <Route path="/dashboard">
+            <Dashboard />
+         </Route>
+        </Switch>
+	</Router>
 	</>
     );
   }

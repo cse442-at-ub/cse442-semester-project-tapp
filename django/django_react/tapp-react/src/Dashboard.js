@@ -1,14 +1,11 @@
 import React, { Component } from 'react';
 
-import Button from 'react-bootstrap/Button';
 import Tab from 'react-bootstrap/Tab';
 import Nav from 'react-bootstrap/Nav';
 
-import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col';
 
-import 'bootstrap/dist/css/bootstrap.min.css'
 import "./styles.css";
 
 import { useDispatch, useSelector, connect } from 'react-redux';
@@ -28,14 +25,14 @@ export class Dashboard extends Component{
 
   render() { 
     return (
-    <>
-    <Row>
+    <div id="main2">
     <TopBar />
+    <Row className="align-middle justify-content-md-center"> 
+    <h1 style={{color:"#f5f9e9"}} > Welcome to class, name </h1>
     </Row>
-    <Row>
+    <Row >
     <Tab.Container id="left-tabs-example" defaultActiveKey="Calendar">
-      <Row>
-        <Col sm={3}>
+        <Col sm={2}>
           <Nav variant="pills" className="flex-column">
             <Nav.Item >
               <Nav.Link eventKey="Calendar" onClick = {() => this.setState({Calendar:true, Queues: false})}>Calendar</Nav.Link>
@@ -54,10 +51,9 @@ export class Dashboard extends Component{
             </Tab.Pane>
           </Tab.Content>
         </Col>
-      </Row>
     </Tab.Container>
     </Row>
-    </>
+    </div>
     )
   }
 }

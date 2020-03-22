@@ -14,7 +14,7 @@ Enzyme.configure({adapter : new Adapter() });
 
 describe('SignupModal', () => {
   it('renders correctly', () => {
-    const wrapper = renderer.create(<LoginModal students={[]} />);
+    const wrapper = renderer.create(<LoginModal students={[]} error={{}}/>);
     let tree = wrapper.toJSON();
     expect(tree).toMatchSnapshot();
   });

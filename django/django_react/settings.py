@@ -39,9 +39,16 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django_react',
+    'django_react.apps.django_react',
+    'django_react.apps.accounts',
     'rest_framework',
+    'knox',
+    'accounts',
+    'django_react',
 ]
+
+REST_FRAMEWORK = {
+        'DEFAULT_AUTHENTICATION_CLASSES':('knox.auth.TokenAuthentication',),}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -54,7 +61,7 @@ MIDDLEWARE = [
     #'django_react.middleware.dev_cors_middleware'
 ]
 
-ROOT_URLCONF = 'django_react.urls'
+ROOT_URLCONF = 'manager.urls'
 
 TEMPLATES = [
     {
@@ -72,7 +79,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'django_react.wsgi.application'
+WSGI_APPLICATION = 'manager.wsgi.application'
 
 
 # Database

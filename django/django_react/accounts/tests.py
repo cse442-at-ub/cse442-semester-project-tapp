@@ -27,7 +27,6 @@ class UserTest(TestCase):
 
 
 class UsersManagersTests(TestCase):
-
     def test_create_user(self):
         User = get_user_model()
         user = User.objects.create_user(email='normal@user.com', password='foo')
@@ -36,8 +35,6 @@ class UsersManagersTests(TestCase):
         self.assertFalse(user.is_staff)
         self.assertFalse(user.is_superuser)
         try:
-            # username is None for the AbstractUser option
-            # username does not exist for the AbstractBaseUser option
             self.assertIsNone(user.username)
         except AttributeError:
             pass
@@ -56,8 +53,6 @@ class UsersManagersTests(TestCase):
         self.assertTrue(admin_user.is_staff)
         self.assertTrue(admin_user.is_superuser)
         try:
-            # username is None for the AbstractUser option
-            # username does not exist for the AbstractBaseUser option
             self.assertIsNone(admin_user.username)
         except AttributeError:
             pass

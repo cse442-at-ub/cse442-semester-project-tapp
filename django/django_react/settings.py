@@ -29,7 +29,7 @@ ALLOWED_HOSTS = []
 
 CSRF_COOKIE_SECURE = False
 
-
+AUTH_USER_MODEL = 'accounts.CustomUser'
 # Application definition
 
 INSTALLED_APPS = [

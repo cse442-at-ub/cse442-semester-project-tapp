@@ -1,15 +1,27 @@
-import React, { Component } from 'react';
+import React, { Component, useEffect } from 'react';
 import Button from 'react-bootstrap/Button';
+import FormControl from 'react-bootstrap/FormControl'
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
 import Alert from 'react-bootstrap/Alert';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { getStudents } from './actions/students';
+import { addUser } from './actions/students';
+
+import Container from 'react-bootstrap/Container'
+import Row from 'react-bootstrap/Row'
+import Col from 'react-bootstrap/Col';
+
+import typist from 'react-typist';
 
 import 'bootstrap/dist/css/bootstrap.min.css'
 import "./styles.css";
 
+import { connect } from 'react-redux';
+
+import store from './store'
+import { createstore } from "redux";
+import reducer from "./reducers/students.js";
+import { getStudents } from './actions/students';
 
 export class LoginModal extends Component  {
 
@@ -35,12 +47,12 @@ export class LoginModal extends Component  {
   }
 
   componentDidUpdate(prevProps) {
-    const {error, alert} = this.props;
-    if(error !== prevProps.error) {
+    const {error, alert } = this.props;
+    if(error != prevProps.error) {
      if(this.props.error.msg.email) {this.setState({emailValid: false,emailMessage: this.props.error.msg.email.join()})}
-     else {this.setState({emailValid: true,emailMessage: ""})}
+     else {this.state.emailValid=true;this.state.emailMessage=""}
      if(this.props.error.msg.password) {this.setState({passValid: false, passMessage: this.props.error.msg.pass.join()})}
-     else {this.setState({passValid:true,passMessage:""})}
+     else {this.state.passValid=true;this.state.passMessage=""}
     }
   };
   
@@ -89,7 +101,7 @@ export class LoginModal extends Component  {
 	    this.toggleSignedUp(true);
     	    this.props.getStudents();
             const res = this.props.students.filter(student => (student.email === form.elements.email.value));
-	    if (res.length === 0){
+	    if (res.length == 0){
 	      this.toggleLoginAlertFail(false);
 	    }
 	    else {
@@ -133,12 +145,12 @@ export class LoginModal extends Component  {
 }
 
 LoginModal.propTypes = {
-        students: PropTypes.array.isRequired,
+        students: PropTypes.array.isRequired
         error: PropTypes.object.isRequired
 }
 
 const mapStateToProps = state => ({
-  students: state.students.students,
+  students: state.students.students
   error: state.errors
 });
 

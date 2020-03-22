@@ -1,14 +1,27 @@
-import React, { Component } from 'react';
+import React, { Component, useEffect } from 'react';
 import Button from 'react-bootstrap/Button';
+import FormControl from 'react-bootstrap/FormControl'
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
 import Alert from 'react-bootstrap/Alert';
 import PropTypes from 'prop-types';
 import { addUser } from './actions/students';
-import { connect } from 'react-redux';
+
+import Container from 'react-bootstrap/Container'
+import Row from 'react-bootstrap/Row'
+import Col from 'react-bootstrap/Col';
+
+import typist from 'react-typist';
 
 import 'bootstrap/dist/css/bootstrap.min.css'
 import "./styles.css";
+
+import { connect } from 'react-redux';
+
+import store from './store'
+import { createstore } from "redux";
+import reducer from "./reducers/students.js";
+
 
 export class SignupModal extends Component {
     constructor(props) {
@@ -39,15 +52,15 @@ export class SignupModal extends Component {
 
   componentDidUpdate(prevProps) {
     const {error, alert } = this.props;
-    if(error !== prevProps.error) {
+    if(error != prevProps.error) {
      if(this.props.error.msg.email) {this.setState({emailValid: false,emailMessage: this.props.error.msg.email.join()})}
-     else {this.setState({emailValid:true,emailMessage:""})}
+     else {this.state.emailValid=true;this.state.emailMessage=""}
      if(this.props.error.msg.password) {this.setState({passValid: false, passMessage: this.props.error.msg.pass.join()})}
-     else {this.setState({passValid:true,passMessage:""})}
+     else {this.state.passValid=true;this.state.passMessage=""}
      if(this.props.error.msg.name) {this.setState({nameValid: false, nameMessage: this.props.error.msg.name.join()})}
-     else {this.setState({nameValid: true,nameMessage: ""})}
+     else {this.state.nameValid=true;this.state.nameMessage=""}
      if(this.props.error.msg.name) {this.setState({courseValid: false, courseMessage: this.props.error.msg.course.join()})}
-     else {this.setState({courseValid:true,courseMessage:""})}
+     else {this.state.courseValid=true;this.state.courseMessage=""}
     }
   }
 

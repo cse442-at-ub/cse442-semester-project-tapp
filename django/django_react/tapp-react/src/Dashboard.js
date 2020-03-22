@@ -18,8 +18,8 @@ export class Dashboard extends Component{
   constructor(props) {
     super(props);
     this.state = {
-      Calendar: true,
-      Queues: false
+      Queues: false,
+      Calendar: true
     };
   }
 
@@ -32,10 +32,10 @@ export class Dashboard extends Component{
     </Row>
     <Row >
     <Tab.Container id="left-tabs-example" defaultActiveKey="Calendar">
-        <Col sm={2}>
-          <Nav variant="pills" className="flex-column">
+        <Col style={{backgroundColor:"#F5F9E9", borderRadius:"5px", height:"85px"}} sm={2}>
+          <Nav fill type="pills" className="flex-column">
             <Nav.Item >
-              <Nav.Link eventKey="Calendar" onClick = {() => this.setState({Calendar:true, Queues: false})}>Calendar</Nav.Link>
+              <Nav.Link style={{textColor:"white"}} eventKey="Calendar" onClick = {() => this.setState({Calendar:true, Queues: false})}>Calendar</Nav.Link>
             </Nav.Item>
             <Nav.Item>
               <Nav.Link eventKey="Queues" onClick = {() => this.setState({Queues:true, Calendar: false})} >Queues</Nav.Link>

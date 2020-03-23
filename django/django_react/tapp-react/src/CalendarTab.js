@@ -40,13 +40,12 @@ export class CalendarTab extends Component{
   onChangeEnd = e => this.setState({ endTime: e });
   onChangeDate = e => this.setState({ date: e});
   handleSubmit = e => {
-	  if(moment(this.state.startTime, 'HH:mm', true).isValid || !moment(this.state.endTime, 'HH:mm', true).isValid || !moment(this.state.date, 'YYYY-MM-DD', true).isValid)
+	  if(!moment(this.state.date, 'YYYY-MM-DD', true).isValid)
           {
 		  this.setState({invalidAlert:true});
 	  }
 	  else{
-          console.log(moment(this.state.startTime, 'HH:mm', true).isValid)
-	  this.props.addEvent({startTime:moment(this.state.date.format('YYYY-MM-DD')+" "+moment(this.state.startTime).format("HH:mm"), 'YYYY-MM-DD HH:mm'), endTime:moment(this.state.date.format('YYYY-MM-DD')+" "+moment(this.state.startTime).format("HH:mm"), 'YYYY-MM-DD HH:mm'), classNum:this.props.course, allDay:false});
+	  this.props.addEvent({startTime:moment(this.state.date.format('YYYY-MM-DD')+" "+moment(this.state.startTime).format("HH:mm"), 'YYYY-MM-DD HH:mm'), endTime:moment(this.state.date.format('YYYY-MM-DD')+" "+moment(this.state.endTime).format("HH:mm"), 'YYYY-MM-DD HH:mm'), classNum:this.props.course, allDay:false});
 	  }
   }
 

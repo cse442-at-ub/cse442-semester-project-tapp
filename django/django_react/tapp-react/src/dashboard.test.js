@@ -29,6 +29,18 @@ describe('Dashboard testing.', () => {
     wrapper.find('[eventKey="Calendar"]').first().simulate("click",componentInstance.handleSubmit);
     expect(wrapper.state('Calendar')).toBe(true);
   });
+
+  it('Dashboard allows for switching between calendar and queue tabs.', () => {
+    const mockLoginfn = jest.fn();
+    const wrapper = shallow(<Dashboard />);
+    const componentInstance = wrapper.instance();
+    expect(wrapper.state('Queues')).toBe(false);
+    wrapper.find('[eventKey="Queues"]').first().simulate("click",componentInstance.handleSubmit);
+    expect(wrapper.state('Queues')).toBe(true);
+    expect(wrapper.state('Calendar')).toBe(false);
+    wrapper.find('[eventKey="Calendar"]').first().simulate("click",componentInstance.handleSubmit);
+    expect(wrapper.state('Calendar')).toBe(true);
+  });
 });
 
 describe('CalendarTab testing.', () => {
@@ -36,5 +48,20 @@ describe('CalendarTab testing.', () => {
     const mockLoginfn = jest.fn();
     const wrapper = shallow(<CalendarTab />);
     const componentInstance = wrapper.instance();
+  });
+
+  it('CalendarTab initializes with a Calendar Instance', () => {
+    const mockLoginfn = jest.fn();
+    const wrapper = shallow(<CalendarTab />);
+    const componentInstance = wrapper.instance();
+    expect(wrapper.find('[startAccessor="start"]').length).toBe(1);
+  });
+
+  it('CalendarTab initializes with ui for creating an event.', () => {
+    const mockLoginfn = jest.fn();
+    const wrapper = shallow(<CalendarTab />);
+    const componentInstance = wrapper.instance();
+    expect(wrapper.find('[dateFormat=false]').length).toBe(2);
+    expect(wrapper.find('[timeFormat=false]').length).toBe(1);
   });
 });

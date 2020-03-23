@@ -13,3 +13,7 @@ from django.urls import path, include
 urlpatterns.append(
     path('', include('accounts.urls'))
 )
+
+urlpatterns.append(
+    path('',include('officehours.urls'))
+)

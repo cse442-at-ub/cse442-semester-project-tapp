@@ -41,7 +41,8 @@ INSTALLED_APPS = [
     'knox',
     'accounts',
     'frontend',
-    'rest_framework'
+    'rest_framework',
+    'officehours'
 ]
 
 MIDDLEWARE = [

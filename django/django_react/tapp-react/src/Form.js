@@ -5,7 +5,9 @@ import Modal from 'react-bootstrap/Modal';
 import Alert from 'react-bootstrap/Alert';
 import PropTypes from 'prop-types';
 import { addUser } from './actions/students';
+import { register } from './actions/auth';
 import { connect } from 'react-redux';
+import { Link, Redirect } from "react-router-dom";
 
 import 'bootstrap/dist/css/bootstrap.min.css'
 import "./styles.css";
@@ -89,11 +91,12 @@ export class SignupModal extends Component {
 	  //this.toggleIsLoading();
 	  const name = form.elements.name.value;
 	  const email = form.elements.email.value;
-	  const pass = form.elements.password.value;
+	  const password = form.elements.password.value;
 	  const course = form.elements.course.value;
-	  const user = {name, email, course};
-	  this.props.addUser(user);
-	  //this.toggleIsLoading();
+	  const instructor = true;
+	  const user = { name,email,password,instructor,course };
+	  console.log(user);
+	  this.props.register(user);
 	  if (this.checkValidity() === true)
           {
 	    this.toggleSignedUp();
@@ -102,6 +105,9 @@ export class SignupModal extends Component {
   };
 
   render() {
+    if (this.props.isAuth) {
+      return <Redirect to="/dashboard" />;
+    }
     const signedUp = this.state.signedUp;
     const isLoading = this.state.isLoading;
     return (
@@ -146,7 +152,8 @@ export class SignupModal extends Component {
 }
 
 SignupModal.propTypes = {
-  addUser: PropTypes.func.isRequired,
+  register: PropTypes.func.isRequired,
+  isAuth: PropTypes.bool,
   error: PropTypes.object.isRequired
 };
 
@@ -154,4 +161,4 @@ const mapStateToProps = state => ({
   error: state.errors
 });
 
-export default connect(mapStateToProps,{ addUser }) (SignupModal);
+export default connect(mapStateToProps,{register, addUser }) (SignupModal);

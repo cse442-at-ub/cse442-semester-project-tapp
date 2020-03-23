@@ -6,6 +6,8 @@ import Alert from 'react-bootstrap/Alert';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { getStudents } from './actions/students';
+import { login } from './actions/auth';
+import { Link, Redirect } from "react-router-dom";
 
 import 'bootstrap/dist/css/bootstrap.min.css'
 import "./styles.css";
@@ -87,26 +89,25 @@ export class LoginModal extends Component  {
 	  else{
             event.preventDefault()
 	    this.toggleSignedUp(true);
-    	    this.props.getStudents();
-            const res = this.props.students.filter(student => (student.email === form.elements.email.value));
-	    if (res.length === 0){
-	      this.toggleLoginAlertFail(false);
-	    }
-	    else {
-	      this.toggleLoginAlertSucc(true);
+	    this.props.login(form.elements.email.value, form.elements.password.value);
+	    if(!this.props.isAuth && !this.props.isLoad) {
+	      this.toggleLoginAlertFail(true);
 	    }
 	  }
 	  this.toggleSignedValid(true);
   };
 
   render() {
+    if (this.props.isAuth) {
+      return <Redirect to="/dashboard" />;
+    }
   return (
     <Modal onHide = {this.props.onHide} show = {this.props.show} size="lg" centered>
       <Modal.Header closeButton>
         <Modal.Title> Login </Modal.Title>
       </Modal.Header>
       <Modal.Body>
-          <Alert variant="danger" show={this.state.loginAlertF} dismissible>
+          <Alert variant="danger" show={this.props.isAuth} dismissible>
             <Alert.Heading> Login Failed </Alert.Heading>
           </Alert>
           <Alert variant="success" show={this.state.loginAlertS} dismissible>
@@ -121,7 +122,7 @@ export class LoginModal extends Component  {
 	    <Form.Label> Password </Form.Label>
 	    <Form.Control name="password" type="password" placeholder="Password" required/>
 	  </Form.Group>
-	  <Button variant="primary" type="submit" disabled={this.state.isLoading}> {this.state.isLoading ? 'Loading...':'Submit'} </Button>
+	  <Button variant="primary" type="submit" disabled={this.props.isLoad}> {this.props.isLoad ? 'Loading...':'Submit'} </Button>
 	</Form>
       </Modal.Body>
       <Modal.Footer>
@@ -133,13 +134,17 @@ export class LoginModal extends Component  {
 }
 
 LoginModal.propTypes = {
-        students: PropTypes.array.isRequired,
+        login: PropTypes.func.isRequired,
+        isLoading: PropTypes.bool,
+        isAuth: PropTypes.bool,
         error: PropTypes.object.isRequired
 }
 
 const mapStateToProps = state => ({
   students: state.students.students,
+  isLoad: state.auth.isLoading,
+  isAuth: state.auth.isAuthenticated,
   error: state.errors
 });
 
-export default connect(mapStateToProps, {getStudents})(LoginModal);
+export default connect(mapStateToProps, {login})(LoginModal);

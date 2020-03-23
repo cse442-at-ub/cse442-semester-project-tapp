@@ -73,6 +73,12 @@ TEMPLATES = [
     },
 ]
 
+REST_FRAMEWORK = {
+   'DEFAULT_AUTHENTICATION_CLASSES': (
+       'knox.auth.TokenAuthentication',
+   ),
+}
+
 WSGI_APPLICATION = 'django_react.wsgi.application'
 
 

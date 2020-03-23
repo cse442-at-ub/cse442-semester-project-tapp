@@ -7,7 +7,9 @@ from .models import Event
 
 class EventViewSet(viewsets.ModelViewSet):
         serializer_class = EventSerializer
-        queryset = Event.objects.all()
-        permission_classes=[
-                permissions.AllowAny
-        ]
+        permission_classes = (permissions.AllowAny,)
+
+        def get_queryset(self):
+          queryset = Event.objects.all()
+          myreq=self.request.query_params.get('classNum')
+          return queryset.filter(classNum=myreq)

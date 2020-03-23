@@ -1,13 +1,13 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`user get reducer should handle GET_STUDENTS 1`] = `
+exports[`user get reducer should handle GET_EVENTS 1`] = `
 Object {
-  "students": undefined,
+  "events": undefined,
 }
 `;
 
 exports[`user get reducer should return the initialState 1`] = `
 Object {
-  "students": Array [],
+  "events": Array [],
 }
 `;

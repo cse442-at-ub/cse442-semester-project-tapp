@@ -1,13 +1,13 @@
 import axios from 'axios';
 
-import { GET_STUDENTS, ADD_USER, GET_ERRORS } from './types';
+import { GET_EVENTS, ADD_EVENT, GET_ERRORS } from './types';
 
 //GET STUDENTS
-export const getStudents = () => dispatch => {
-  axios.get('http://localhost:3000/api/users/')
+export const getEvents = (param) => dispatch => {
+  axios.get('http://localhost:3000/api/class?classNum='+param)
   .then(res => {
     dispatch({
-      type: GET_STUDENTS,
+      type: GET_EVENTS,
       payload: res.data
     });
   })
@@ -16,12 +16,12 @@ export const getStudents = () => dispatch => {
 
 
 //ADD USER
-export const addUser = user => dispatch => {
+export const addEvent = events => dispatch => {
   axios	
-  .post('http://localhost:3000/api/users/', user)
+  .post('/api/class', events)
   .then(res => {
   dispatch({
-    type: ADD_USER,
+    type: ADD_EVENT,
     payload: res.data
   });
   })

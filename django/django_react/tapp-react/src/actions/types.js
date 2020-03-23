@@ -1,5 +1,5 @@
-export const GET_STUDENTS = "GET_STUDENTS";
-export const ADD_USER = "ADD_USER";
+export const GET_EVENTS = "GET_EVENTS";
+export const ADD_EVENT = "ADD_EVENT";
 export const GET_ERRORS = "GET_ERRORS";
 export const USER_LOADING = "USER_LOADING";
 export const USER_LOADED = "USER_LOADED";

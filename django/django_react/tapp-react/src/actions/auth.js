@@ -12,6 +12,13 @@ import {
   REGISTER_FAIL
 } from "./types";
 
+export const errorfetch = (msg, status) => {
+  return {
+    type: GET_ERRORS,
+    payload: { msg, status }
+  };
+};
+
 export const loadCustomUser = () => (dispatch, getState) => {
   axios
     .get("/api/auth/user", tokenConfig(getState))
@@ -46,6 +53,7 @@ export const login = (email, password) => dispatch => {
       });
     })
     .catch(err => {
+      dispatch(errorfetch(err.response.data, err.response.status));
       dispatch({
         type: LOGIN_FAIL
       });
@@ -70,9 +78,7 @@ export const register = ({ name,email, password, instructor,course }) => dispatc
       });
     })
     .catch(err => {
-    const errors = {
-      msg: err.response.data,
-      status: err.response.status}
+      dispatch(errorfetch(err.response.data, err.response.status));
       dispatch({
         type: REGISTER_FAIL
       });
@@ -108,3 +114,4 @@ export const tokenConfig = getState => {
 
   return config;
 };
+

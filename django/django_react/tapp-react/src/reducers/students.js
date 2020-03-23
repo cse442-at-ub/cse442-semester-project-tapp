@@ -1,20 +1,20 @@
-import {GET_STUDENTS, ADD_USER} from "../actions/types.js"
+import {GET_EVENTS, ADD_EVENT} from "../actions/types.js"
 
 const initialState = {
-  students: []
+  events: []
 }
 
 export default function(state=initialState, action) {
   switch(action.type) {
-    case GET_STUDENTS:
+    case GET_EVENTS:
       return {
       ...state,
-      students: action.payload
+      events: action.payload
       };
-    case ADD_USER:
+    case ADD_EVENT:
       return {
       ...state,
-      students: [...state.students, action.payload]};
+      events: [...state.events, action.payload]};
     default: return state
   }
 }

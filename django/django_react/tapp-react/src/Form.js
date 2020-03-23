@@ -4,7 +4,6 @@ import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
 import Alert from 'react-bootstrap/Alert';
 import PropTypes from 'prop-types';
-import { addUser } from './actions/students';
 import { register } from './actions/auth';
 import { connect } from 'react-redux';
 import { Link, Redirect } from "react-router-dom";
@@ -95,7 +94,6 @@ export class SignupModal extends Component {
 	  const course = form.elements.course.value;
 	  const instructor = true;
 	  const user = { name,email,password,instructor,course };
-	  console.log(user);
 	  this.props.register(user);
 	  if (this.checkValidity() === true)
           {
@@ -128,7 +126,6 @@ export class SignupModal extends Component {
             <Form.Group controlId="formBasicPassword">
               <Form.Label> Password </Form.Label>
               <Form.Control name="password" type="password" placeholder="Password" isInvalid={!this.state.passValid&&this.state.first} required/>
-              <Form.Control.Feedback type="invalid"> Please enter a password! </Form.Control.Feedback> 
             </Form.Group>
             <Form.Group controlId="formBasicText">
               <Form.Label> Name </Form.Label>
@@ -161,4 +158,4 @@ const mapStateToProps = state => ({
   error: state.errors
 });
 
-export default connect(mapStateToProps,{register, addUser }) (SignupModal);
+export default connect(mapStateToProps,{register}) (SignupModal);

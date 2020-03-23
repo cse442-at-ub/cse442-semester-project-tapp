@@ -40,7 +40,6 @@ export class LandingPage extends Component{
   };
 
   render() { 
-    console.log("AHAHAHAHA"+this.props.isAuthenticated);
     if ( this.props.isAuthenticated ) {
       return <Redirect exact to="/dashboard" />;
     }

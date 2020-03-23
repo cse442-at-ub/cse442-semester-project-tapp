@@ -24,6 +24,12 @@ export class LoginModal extends Component  {
             loginAlertF: false,
             loginAlertS: false,
             onHide: props.onHide,
+	    passValid: false,
+	    nameValid: false,
+	    courseValid: false,
+	    emailMessage: "Please enter an email!",
+	    nameMessage: "",
+	    courseMessage: "",
             show: props.show
     };
 
@@ -34,12 +40,20 @@ export class LoginModal extends Component  {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.toggleLoginAlertFail = this.toggleLoginAlertFail.bind(this);
     this.toggleLoginAlertSucc = this.toggleLoginAlertSucc.bind(this);
+    this.checkValidity = this.checkValidity.bind(this);
   }
 
   componentDidUpdate(prevProps) {
     const {error, alert} = this.props;
+    var x;
     if(error !== prevProps.error) {
      if(this.props.error.msg.email) {this.setState({emailValid: false,emailMessage: this.props.error.msg.email.join()})}
+     if(this.props.error.msg.non_field_errors) {
+	     for (x in this.props.error.msg.non_field_errors)
+	     {
+	       if (this.props.error.msg.non_field_errors[x] == 'Invalid password.'){
+                this.setState({passValid: false, passMessage:this.props.error.msg.non_field_errors[x]})}
+     	     }}
      else {this.setState({emailValid: true,emailMessage: ""})}
      if(this.props.error.msg.password) {this.setState({passValid: false, passMessage: this.props.error.msg.pass.join()})}
      else {this.setState({passValid:true,passMessage:""})}
@@ -88,14 +102,23 @@ export class LoginModal extends Component  {
 	  if (form.checkValidity() === false) { event.preventDefault(); event.stopPropagation();}
 	  else{
             event.preventDefault()
+            this.setState({passValid: true, passMessage:""})
 	    this.toggleSignedUp(true);
 	    this.props.login(form.elements.email.value, form.elements.password.value);
 	    if(!this.props.isAuth && !this.props.isLoad) {
 	      this.toggleLoginAlertFail(true);
 	    }
 	  }
-	  this.toggleSignedValid(true);
+	  if (this.checkValidity() === true)
+          {
+	    this.toggleSignedUp();
+	    this.toggleSignedValid(true);
+	  }
   };
+
+  checkValidity = () => {
+    //return this.state.emailValid && this.state.nameValid && this.state.passValid;};
+    return this.state.emailValid && this.state.passValid};
 
   render() {
     if (this.props.isAuth) {
@@ -113,14 +136,16 @@ export class LoginModal extends Component  {
           <Alert variant="success" show={this.state.loginAlertS} dismissible>
             <Alert.Heading> Login Successfull </Alert.Heading>
           </Alert>
-	<Form noValid onSubmit={this.handleSubmit} validated = {this.state.signedValid}>
+          <Form onSubmit={this.handleSubmit} validated={this.checkValidity()}>
 	  <Form.Group controlId="formBasicEmail">
 	    <Form.Label> E-mail </Form.Label>
 	    <Form.Control name="email" type="email" placeholder="example@domain.com" required/>
+            <Form.Control.Feedback type="invalid"> {this.state.emailMessage} </Form.Control.Feedback> 
 	  </Form.Group>
 	  <Form.Group controlId="formBasicPassword">
 	    <Form.Label> Password </Form.Label>
 	    <Form.Control name="password" type="password" placeholder="Password" required/>
+            <Form.Control.Feedback type="invalid"> {this.state.passMessage} </Form.Control.Feedback> 
 	  </Form.Group>
 	  <Button variant="primary" type="submit" disabled={this.props.isLoad}> {this.props.isLoad ? 'Loading...':'Submit'} </Button>
 	</Form>

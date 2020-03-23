@@ -14,21 +14,22 @@ Enzyme.configure({adapter : new Adapter() });
 
 describe('SignupModal', () => {
   it('renders correctly', () => {
-    const wrapper = renderer.create(<LoginModal students={[]} error={{}}/>);
+    const mockLoginfn = jest.fn();
+    const wrapper = renderer.create(<LoginModal login={mockLoginfn} students={[]} error={{}}/>);
     let tree = wrapper.toJSON();
     expect(tree).toMatchSnapshot();
   });
 
   it('SignupModal renders correctly', () => {
     const mockLoginfn = jest.fn();
-    const wrapper = renderer.create(<SignupModal addUser={mockLoginfn} error={{}} />);
+    const wrapper = renderer.create(<SignupModal register={mockLoginfn} addEvent={mockLoginfn} error={{}} />);
     let tree = wrapper.toJSON();
     expect(tree).toMatchSnapshot();
   });
 
   it('SignupModal initializes states correctly', () => {
     const mockLoginfn = jest.fn();
-    const wrapper = shallow(<SignupModal addUser={mockLoginfn} error={{}} />);
+    const wrapper = shallow(<SignupModal register={mockLoginfn} addEvent={mockLoginfn} error={{}} />);
     const componentInstance = wrapper.instance();
     expect(wrapper.state('emailValid')).toBe(false);
     expect(wrapper.state('nameValid')).toBe(false);
@@ -41,7 +42,7 @@ describe('SignupModal', () => {
 
   it('Toggling works for similar toggles', () => {
     const mockLoginfn = jest.fn();
-    const wrapper = shallow(<SignupModal addUser={mockLoginfn} error={{}} />);
+    const wrapper = shallow(<SignupModal register={mockLoginfn} addEvent={mockLoginfn} error={{}} />);
     const componentInstance = wrapper.instance();
     expect(wrapper.state('first')).toBe(false);
     expect(wrapper.state('isLoading')).toBe(false);
@@ -51,7 +52,7 @@ describe('SignupModal', () => {
 
   it('Fails on invalid email', () => {
     const mockLoginfn = jest.fn();
-    const wrapper = mount(<SignupModal show={true} addUser={mockLoginfn} error={{}} />);
+    const wrapper = mount(<SignupModal register={mockLoginfn} show={true} addEvent={mockLoginfn} error={{}} />);
     const componentInstance = wrapper.instance();
     wrapper.find('[name="email"]').first().simulate("change",{target: {value : "a@c"} });
     wrapper.find('[name="name"]').first().simulate("change",{target: {value : "a@c"} });
@@ -64,7 +65,7 @@ describe('SignupModal', () => {
 
   it('Check validity', () => {
     const mockLoginfn = jest.fn();
-    const wrapper = mount(<SignupModal show={true} addUser={mockLoginfn} error={{}} />);
+    const wrapper = mount(<SignupModal register={mockLoginfn} show={true} addEvent={mockLoginfn} error={{}} />);
     const componentInstance = wrapper.instance();
     wrapper.find('[name="email"]').first().simulate("change",{target: {value : "a@c"} });
     wrapper.find('[name="name"]').first().simulate("change",{target: {value : "a@c"} });

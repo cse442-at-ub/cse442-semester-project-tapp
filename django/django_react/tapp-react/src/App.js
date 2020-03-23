@@ -8,8 +8,14 @@ import {
 import "./styles.css";
 import LandingPage from './LandingPage.js';
 import Dashboard from './Dashboard.js';
+import PRoute from './Proute.js';
+import {loadCustomUser} from './actions/auth';
 
 export class App extends Component{
+  componentDidMount() {
+    this.props.store.dispatch(loadCustomUser());
+  }
+
   render() { 
     return (
 	<>
@@ -18,9 +24,9 @@ export class App extends Component{
           <Route exact path="/">
 	  <LandingPage />
           </Route>
-          <Route path="/dashboard">
+          <Route exact path="/dashboard" component={Dashboard} >
             <Dashboard />
-         </Route>
+          </Route>
         </Switch>
 	</Router>
 	</>

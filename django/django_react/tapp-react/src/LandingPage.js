@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 import Button from 'react-bootstrap/Button';
 
@@ -11,6 +12,9 @@ import "./styles.css";
 import SignupModal from './Form';
 import LoginModal from './Login';
 import TopBar from './topbar';
+
+import { connect } from 'react-redux';
+import { Link, Redirect } from "react-router-dom";
 
 export class LandingPage extends Component{
   constructor(props) {
@@ -36,9 +40,14 @@ export class LandingPage extends Component{
   };
 
   render() { 
+    console.log("AHAHAHAHA"+this.props.isAuthenticated);
+    if ( this.props.isAuthenticated ) {
+      return <Redirect exact to="/dashboard" />;
+    }
+
     return (
     <><div style={{background: "#596869"}} id="main">
-    <TopBar login={this.toggleSign} signin={this.toggleLogin} />
+    <TopBar logout={false} signin={this.toggleSign} login={this.toggleLogin} />
     <Row className="align-middle justify-content-md-center"> 
     <Typist stdTypingDelay={0} cursor={{show:false, blink: true}}>
     <p className="text-center" style={{color:"#f5f9e9", fontSize:50, display:'inline-block'}}>
@@ -62,4 +71,12 @@ export class LandingPage extends Component{
   }
 }
 
-export default LandingPage;
+LandingPage.propTypes = {
+        isAuthenticated: PropTypes.bool
+}
+
+const mapStateToProps = state => ({
+  isAuthenticated: state.auth.isAuthenticated
+});
+
+export default connect(mapStateToProps)(LandingPage);

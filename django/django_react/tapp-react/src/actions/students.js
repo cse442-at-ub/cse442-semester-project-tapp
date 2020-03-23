@@ -11,7 +11,6 @@ export const getEvents = (param) => dispatch => {
       payload: res.data
     });
   })
-  .catch(err => console.log(err.response.data))
 };
 
 
@@ -26,12 +25,9 @@ export const addEvent = events => dispatch => {
   });
   })
   .catch(err => {
-    const errors = {
-      msg: err.response.data,
-      status: err.response.status}
   dispatch({
     type: GET_ERRORS, 
-    payload: errors
+    payload: err
     });
   });
 };

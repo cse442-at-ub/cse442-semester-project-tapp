@@ -75,4 +75,12 @@ describe('SignupModal', () => {
     wrapper.find('[type="submit"]').first().simulate("click",componentInstance.handleSubmit);
     expect(componentInstance.checkValidity()).toBe(false);
   });
+
+  it('Check instructor button', () => {
+    const mockLoginfn = jest.fn();
+    const wrapper = mount(<SignupModal register={mockLoginfn} show={true} addEvent={mockLoginfn} error={{}} />);
+    const componentInstance = wrapper.instance();
+    const val=wrapper.find('[name="ins"]').first();
+    expect(val!=null).toBe(true);
+  });
 });

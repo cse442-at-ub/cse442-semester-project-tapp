@@ -92,7 +92,7 @@ export class SignupModal extends Component {
 	  const email = form.elements.email.value;
 	  const password = form.elements.password.value;
 	  const course = form.elements.course.value;
-	  const instructor = true;
+	  const instructor = form.elements.ins.value;
 	  const user = { name,email,password,instructor,course };
 	  this.props.register(user);
 	  if (this.checkValidity() === true)
@@ -137,6 +137,12 @@ export class SignupModal extends Component {
               <Form.Control type="text" name="course" placeholder="Course" isValid={this.state.courseValid} isInvalid={!this.state.courseValid&&this.state.first} required />
               <Form.Control.Feedback type="invalid"> Please enter a Course Name! </Form.Control.Feedback> 
             </Form.Group>
+            <Form.Check
+              type={'checkbox'}
+	      name="ins"
+              label={'Instructor?'}
+            />
+
             <Button variant="primary" type="submit" disabled={isLoading}> {isLoading ? 'Loading...':'Submit'} </Button>
           </Form>
         </Modal.Body>

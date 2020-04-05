@@ -40,17 +40,18 @@ export class CalendarTab extends Component{
   onChangeEnd = e => this.setState({ endTime: e });
   onChangeDate = e => this.setState({ date: e});
   handleSubmit = e => {
-	  if(moment(this.state.startTime, 'HH:mm', true).isValid || !moment(this.state.endTime, 'HH:mm', true).isValid || !moment(this.state.date, 'YYYY-MM-DD', true).isValid)
+	  if(!moment(this.state.date, 'YYYY-MM-DD', true).isValid)
           {
 		  this.setState({invalidAlert:true});
 	  }
 	  else{
-          console.log(moment(this.state.startTime, 'HH:mm', true).isValid)
-	  this.props.addEvent({startTime:moment(this.state.date.format('YYYY-MM-DD')+" "+moment(this.state.startTime).format("HH:mm"), 'YYYY-MM-DD HH:mm'), endTime:moment(this.state.date.format('YYYY-MM-DD')+" "+moment(this.state.startTime).format("HH:mm"), 'YYYY-MM-DD HH:mm'), classNum:this.props.course, allDay:false});
+	  this.props.addEvent({startTime:moment(this.state.date.format('YYYY-MM-DD')+" "+moment(this.state.startTime).format("HH:mm"), 'YYYY-MM-DD HH:mm'), endTime:moment(this.state.date.format('YYYY-MM-DD')+" "+moment(this.state.endTime).format("HH:mm"), 'YYYY-MM-DD HH:mm'), classNum:this.props.course, allDay:false});
 	  }
   }
 
   render() { 
+    if (this.props.instruct === true)
+	  {
     return (
 	    <>
   <div id="tab">
@@ -72,7 +73,7 @@ export class CalendarTab extends Component{
     / >
     </Row>
     <Row className="align-middle justify-content-md-center mt-3">
-    <h3> Instructor commands </h3>
+    <h3 name="instruct-field"> Instructor commands </h3>
     </Row>
     <Row className="align-middle justify-content-md-center mt-3">
   <Alert variant="danger" show = {this.state.invalidAlert} onClose = {() => this.setState({invalidAlert:false})} dismissible>
@@ -102,6 +103,36 @@ export class CalendarTab extends Component{
   </div>
   </>
     )
+  }
+   else
+	  {
+    return (
+	    <>
+  <div id="tab">
+    <Container style={{backgroundColor:"#F5F9E9",borderRadius:"5px"}} fluid>
+    <Row className="align-middle justify-content-md-center" style={{paddingTop:"15px",borderRadius:"5px"}} > 
+    <Calendar
+      localizer={momentLocalizer(moment)}
+      defaultDate={moment().toDate()}
+      events={[]}
+      startAccessor="start"
+      endAccessor="end"
+      events= {this.props.events.map(myevent => (
+	      {
+	        title:"Office hours",
+		start:moment(myevent.startTime).toDate(),
+		end: moment(myevent.endTime).toDate()
+	      }))}
+      style={{ height: 700 }}
+    / >
+    </Row>
+    <Row style={{paddingBottom:"50px"}}>
+    </Row>
+    </Container>
+  </div>
+  </>
+    )
+  }
   }
 }
 

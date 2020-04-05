@@ -55,7 +55,7 @@ export class Dashboard extends Component{
         <Col sm={9}>
           <Tab.Content>
             <Tab.Pane eventKey="Calendar">
-	    <CalendarTab course={user.course}/>
+	    <CalendarTab course={user.course} instruct={user.instructor} />
             </Tab.Pane>
             <Tab.Pane eventKey="Queues">
             </Tab.Pane>

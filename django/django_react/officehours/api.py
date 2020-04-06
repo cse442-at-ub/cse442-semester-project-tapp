@@ -12,4 +12,7 @@ class EventViewSet(viewsets.ModelViewSet):
         def get_queryset(self):
           queryset = Event.objects.all()
           myreq=self.request.query_params.get('classNum')
-          return queryset.filter(classNum=myreq)
+          if myreq:
+              return queryset.filter(classNum=myreq)
+          else:
+              return queryset

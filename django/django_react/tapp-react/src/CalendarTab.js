@@ -59,6 +59,7 @@ export class CalendarTab extends Component{
     <Row className="align-middle justify-content-md-center" style={{paddingTop:"15px",borderRadius:"5px"}} > 
     <Calendar
       localizer={momentLocalizer(moment)}
+      popup
       defaultDate={moment().toDate()}
       events={[]}
       startAccessor="start"
@@ -114,6 +115,7 @@ export class CalendarTab extends Component{
     <Calendar
       localizer={momentLocalizer(moment)}
       defaultDate={moment().toDate()}
+      popup
       events={[]}
       startAccessor="start"
       endAccessor="end"

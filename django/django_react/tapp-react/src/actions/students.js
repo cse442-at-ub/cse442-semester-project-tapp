@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import { GET_EVENTS, ADD_EVENT, GET_ERRORS } from './types';
+import { GET_EVENTS, ADD_EVENT, DELETE_EVENT, GET_ERRORS } from './types';
 
 //GET STUDENTS
 export const getEvents = (param) => dispatch => {
@@ -17,11 +17,28 @@ export const getEvents = (param) => dispatch => {
 //ADD USER
 export const addEvent = events => dispatch => {
   axios	
-  .post('/api/class', events)
+  .post('/api/class/', events)
   .then(res => {
   dispatch({
     type: ADD_EVENT,
     payload: res.data
+  });
+  })
+  .catch(err => {
+  dispatch({
+    type: GET_ERRORS, 
+    payload: err
+    });
+  });
+};
+
+export const deleteEvent = (id) => dispatch => {
+  axios	
+  .delete('/api/class/'+id.toString()+'/')
+  .then(res => {
+  dispatch({
+    type: DELETE_EVENT,
+    payload: id
   });
   })
   .catch(err => {

@@ -71,7 +71,7 @@ export class CalendarTab extends Component{
 		  this.setState({invalidAlert:true});
 	  }
 	  else{
-	  this.props.addEvent({startTime:moment(this.state.date.format('YYYY-MM-DD')+" "+moment(this.state.startTime).format("HH:mm"), 'YYYY-MM-DD HH:mm'), endTime:moment(this.state.date.format('YYYY-MM-DD')+" "+moment(this.state.endTime).format("HH:mm"), 'YYYY-MM-DD HH:mm'), classNum:this.props.course, allDay:false});
+	  this.props.addEvent({startTime:moment(this.state.date.format('YYYY-MM-DD')+" "+moment(this.state.startTime).format("HH:mm"), 'YYYY-MM-DD HH:mm'), endTime:moment(this.state.date.format('YYYY-MM-DD')+" "+moment(this.state.endTime).format("HH:mm"), 'YYYY-MM-DD HH:mm'), classNum:this.props.course, allDay:false, instructor: this.props.usr.name, owner: this.props.usr.email});
 	  }
   }
 
@@ -117,7 +117,8 @@ export class CalendarTab extends Component{
       components = {{event: myEvent}}
       events= {this.props.events.map(myevent => (
 	      {
-	        title:"Office hours",
+	        title:myevent.instructor+"'s Office hours",
+	        owner:myevent.owner+"'s Office hours",
 		start:moment(myevent.startTime).toDate(),
 		end: moment(myevent.endTime).toDate()
 	      }))}

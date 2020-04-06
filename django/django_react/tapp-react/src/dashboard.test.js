@@ -50,33 +50,33 @@ describe('Dashboard testing.', () => {
 describe('CalendarTab testing.', () => {
   it('CalendarTab initializes states correctly', () => {
     const mockLoginfn = jest.fn();
-    const wrapper = mount(<CalendarTab events={[]} instruct={true}/>);
+    const wrapper = mount(<CalendarTab events={[]} instruct={true} name={"andy"} usr={{}} />);
     const componentInstance = wrapper.instance();
   });
 
   it('CalendarTab initializes with a Calendar Instance', () => {
     const mockLoginfn = jest.fn();
-    const wrapper = mount(<CalendarTab events={[]} instruct={true}/>);
+    const wrapper = mount(<CalendarTab events={[]} instruct={true} name={"andy"} usr={{}} />);
     const componentInstance = wrapper.instance();
     expect(wrapper.find('[startAccessor="start"]').length).toBe(4);
   });
 
   it('CalendarTab initializes with ui for creating an event.', () => {
     const mockLoginfn = jest.fn();
-    const wrapper = mount(<CalendarTab events={[]} instruct={true}/>);
+    const wrapper = mount(<CalendarTab events={[]} instruct={true} name={"andy"} usr={{}} />);
     const componentInstance = wrapper.instance();
     expect(wrapper.find('[dateFormat=false]').length).toBe(2);
     expect(wrapper.find('[timeFormat=false]').length).toBe(1);
   });
   it('CalendarTab initializes without instructor commands for non instructors', () => {
     const mockLoginfn = jest.fn();
-    const wrapper = mount(<CalendarTab events={[]} instruct={false}/>);
+    const wrapper = mount(<CalendarTab events={[]} instruct={true} name={"andy"} usr={{}} />);
     const componentInstance = wrapper.instance();
     expect(wrapper.find('[name="instruct-field"]').length).toBe(0);
   });
   it('CalendarTab initializes without instructor commands for instructors', () => {
     const mockLoginfn = jest.fn();
-    const wrapper = mount(<CalendarTab events={[]} instruct={true}/>);
+    const wrapper = mount(<CalendarTab events={[]} instruct={true} name={"andy"} usr={{}} />);
     const componentInstance = wrapper.instance();
     expect(wrapper.find('[name="instruct-field"]').length).toBe(1);
   });

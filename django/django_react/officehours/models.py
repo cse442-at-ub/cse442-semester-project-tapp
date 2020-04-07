@@ -7,6 +7,7 @@ class Event(models.Model):
     classNum = models.CharField("CSE 442", max_length=100)
     instructor = models.CharField("Andyboi", max_length=100000000, default= "Andyboi")
     owner = models.EmailField("a@a.com", default= "a@a.com")
+    topic = models.CharField("topic", default= "General", max_length=1000)
 
     def __str__(self):
         return self.startTime + " " + self.endTime + " " + " " + self.classNum

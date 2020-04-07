@@ -23,6 +23,7 @@ function myEvent(deletefunc, { event }) {
     <Popover.Content>
 	  <div> Start time: {moment(event.start).format('HH:mm')} </div>
 	  <div> End time: {moment(event.end).format('HH:mm')} </div>
+	  <div> Topic focus: {event.topic} </div>
     </Popover.Content>
   </Popover>);
 
@@ -31,6 +32,7 @@ function myEvent(deletefunc, { event }) {
     <Popover.Content>
 	  <div> Start time: {moment(event.start).format('HH:mm')} </div>
 	  <div> End time: {moment(event.end).format('HH:mm')} </div>
+	  <div> Topic focus: {event.topic} </div>
 	  <Button onClick= {deletefunc.bind(this,event.id)}> Delete entry? </Button>
     </Popover.Content>
   </Popover>);
@@ -66,6 +68,7 @@ export class CalendarTab extends Component{
 	    startTime: "",
 	    endTime: "",
 	    date: "",
+	    topic: "General",
             invalidAlert: false,
   	    partmyEvent: myEvent.bind(null, this.props.deleteEvent)
     }
@@ -75,6 +78,7 @@ export class CalendarTab extends Component{
     this.handleSubmit = this.handleSubmit.bind(this);
     this.myEvent = this.myEvent.bind(this);
     this.popover = this.popover.bind(this);
+    this.onChangeTopic = this.onChangeTopic.bind(this);
   }
 
 
@@ -87,6 +91,7 @@ export class CalendarTab extends Component{
   }
 
   onChangeStart = e => this.setState({ startTime: e});
+  onChangeTopic = e => this.setState({ topic: e.target.value});
   onChangeEnd = e => this.setState({ endTime: e });
   onChangeDate = e => this.setState({ date: e});
   handleSubmit = e => {
@@ -95,7 +100,7 @@ export class CalendarTab extends Component{
 		  this.setState({invalidAlert:true});
 	  }
 	  else{
-	  this.props.addEvent({startTime:moment(this.state.date.format('YYYY-MM-DD')+" "+moment(this.state.startTime).format("HH:mm"), 'YYYY-MM-DD HH:mm'), endTime:moment(this.state.date.format('YYYY-MM-DD')+" "+moment(this.state.endTime).format("HH:mm"), 'YYYY-MM-DD HH:mm'), classNum:this.props.course, allDay:false, instructor: this.props.usr.name, owner: this.props.usr.email});
+	  this.props.addEvent({startTime:moment(this.state.date.format('YYYY-MM-DD')+" "+moment(this.state.startTime).format("HH:mm"), 'YYYY-MM-DD HH:mm'), endTime:moment(this.state.date.format('YYYY-MM-DD')+" "+moment(this.state.endTime).format("HH:mm"), 'YYYY-MM-DD HH:mm'), classNum:this.props.course, allDay:false, instructor: this.props.usr.name, owner: this.props.usr.email, topic: this.state.topic});
 	  }
       this.props.getEvents(this.props.course);
   }
@@ -144,6 +149,7 @@ export class CalendarTab extends Component{
 	      {
 	        title:myevent.instructor+"'s Office hours",
 	        owner:myevent.owner===this.props.usr.email,
+	        topic:myevent.topic,
 	        id:myevent.id,
 		start:moment(myevent.startTime).toDate(),
 		end: moment(myevent.endTime).toDate()
@@ -171,6 +177,10 @@ export class CalendarTab extends Component{
     <Col className="flex-column">
     <h5> Time end:   </h5>
     <DateTime onChange={this.onChangeEnd} dateFormat={false} inputProps={{placeholder: 'HH:MM AM/PM'}}/> 
+    </Col>
+    <Col className="flex-column">
+    <h5> Topic focus:   </h5>
+    <input type="text" class="form-control" placeholder="General" onChange={this.onChangeTopic} / >
     </Col>
     </Row>
     <Row style={{paddingBottom:"100px"}}>
@@ -202,6 +212,7 @@ export class CalendarTab extends Component{
 	        title:myevent.instructor+"'s Office hours",
 	        owner:myevent.owner,
 	        id:myevent.id,
+	        topic:myevent.topic,
 		start:moment(myevent.startTime).toDate(),
 		end: moment(myevent.endTime).toDate()
 	      }))}

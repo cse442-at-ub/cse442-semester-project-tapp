@@ -116,7 +116,6 @@ export class CalendarTab extends Component{
 
   myEvent = (e) => {
 
-  console.log("Hello");
   let popoverClickRootClose = (
     <Popover id="popover-trigger-click-root-close" style={{ zIndex: 10000 }}>
       <h1>{e.title}</h1>

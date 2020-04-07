@@ -13,6 +13,7 @@ import PropTypes from 'prop-types';
 
 import TopBar from './topbar';
 import CalendarTab from './CalendarTab';
+import Info from './Info';
 import { Link, Redirect } from "react-router-dom";
 import {loadCustomUser} from './actions/auth';
 import {getEvents} from './actions/students';
@@ -22,6 +23,7 @@ export class Dashboard extends Component{
     super(props);
     this.state = {
       Queues: false,
+      Staff: false,
       Calendar: true
     };
   }
@@ -42,13 +44,16 @@ export class Dashboard extends Component{
     </Row>
     <Row >
     <Tab.Container id="left-tabs-example" defaultActiveKey="Calendar">
-        <Col style={{backgroundColor:"#F5F9E9", borderRadius:"5px", height:"85px"}} sm={2}>
+        <Col style={{backgroundColor:"#F5F9E9", borderRadius:"5px", height:"125px"}} sm={2}>
           <Nav fill type="pills" className="flex-column">
             <Nav.Item >
-              <Nav.Link style={{textColor:"white"}} eventKey="Calendar" onClick = {() => this.setState({Calendar:true, Queues: false})}>Calendar</Nav.Link>
+              <Nav.Link style={{textColor:"white"}} eventKey="Calendar" onClick = {() => this.setState({Calendar:true, Queues: false, Staff: false})}>Calendar</Nav.Link>
             </Nav.Item>
             <Nav.Item>
-              <Nav.Link eventKey="Queues" onClick = {() => this.setState({Queues:true, Calendar: false})} >Queues</Nav.Link>
+              <Nav.Link eventKey="Queues" onClick = {() => this.setState({Queues:true, Calendar: false, Staff: false})} >Queues</Nav.Link>
+            </Nav.Item>
+            <Nav.Item>
+              <Nav.Link eventKey="Info" onClick = {() => this.setState({Queues:false, Calendar: false, Staff: true})} > Staff List </Nav.Link>
             </Nav.Item>
           </Nav>
         </Col>
@@ -58,6 +63,9 @@ export class Dashboard extends Component{
 	    <CalendarTab course={user.course} instruct={user.instructor} name={user.name} usr={user} />
             </Tab.Pane>
             <Tab.Pane eventKey="Queues">
+            </Tab.Pane>
+            <Tab.Pane eventKey="Info">
+	    <Info course={user.course}/>
             </Tab.Pane>
           </Tab.Content>
         </Col>

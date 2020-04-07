@@ -2,8 +2,10 @@ import React from 'react';
 import renderer from 'react-test-renderer';
 import {Dashboard} from './Dashboard';
 import {CalendarTab} from './CalendarTab';
+import {Info} from './Info';
 import {initialState} from '../src/reducers/students'
 import { Provider } from 'react-redux';
+import Table from 'react-bootstrap/Table'
 import Adapter from "enzyme-adapter-react-16";
 import Enzyme, { shallow, mount} from "enzyme";
 import { BrowserRouter as Router } from 'react-router-dom';
@@ -70,7 +72,7 @@ describe('CalendarTab testing.', () => {
   });
   it('CalendarTab initializes without instructor commands for non instructors', () => {
     const mockLoginfn = jest.fn();
-    const wrapper = mount(<CalendarTab events={[]} instruct={true} name={"andy"} usr={{}} />);
+    const wrapper = mount(<CalendarTab events={[]} instruct={false} name={"andy"} usr={{}} />);
     const componentInstance = wrapper.instance();
     expect(wrapper.find('[name="instruct-field"]').length).toBe(0);
   });
@@ -79,5 +81,19 @@ describe('CalendarTab testing.', () => {
     const wrapper = mount(<CalendarTab events={[]} instruct={true} name={"andy"} usr={{}} />);
     const componentInstance = wrapper.instance();
     expect(wrapper.find('[name="instruct-field"]').length).toBe(1);
+  });
+});
+
+describe('InfoTab testing.', () => {
+  it('InfoTab initializes states correctly', () => {
+    const mockLoginfn = jest.fn();
+    const wrapper = mount(<Info getInstructors={mockLoginfn} instructors = {[]} course={"Yes"} />);
+    const componentInstance = wrapper.instance();
+  });
+
+  it('InfoTab initializes with a Calendar Instance', () => {
+    const mockLoginfn = jest.fn();
+    const wrapper = mount(<Info getInstructors={mockLoginfn} instructors = {[]} course={"Yes"} />);
+    const componentInstance = wrapper.instance();
   });
 });

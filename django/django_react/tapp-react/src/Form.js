@@ -22,6 +22,7 @@ export class SignupModal extends Component {
             onHide: props.onHide,
             show: props.show,
 	    emailValid: false,
+	    isInstructor: false,
 	    passValid: false,
 	    nameValid: false,
 	    courseValid: false,
@@ -36,6 +37,7 @@ export class SignupModal extends Component {
     this.toggleIsLoading = this.toggleIsLoading.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.checkValidity = this.checkValidity.bind(this);
+    this.handleCheckboxChange = this.handleCheckboxChange.bind(this);
   }
 
   componentDidUpdate(prevProps) {
@@ -50,6 +52,12 @@ export class SignupModal extends Component {
      if(this.props.error.msg.name) {this.setState({courseValid: false, courseMessage: this.props.error.msg.course.join()})}
      else {this.setState({courseValid:true,courseMessage:""})}
     }
+  }
+
+  handleCheckboxChange(event) {
+    this.setState({
+        isInstructor: event.target.checked,
+    });
   }
 
   toggleSignedUp = () => {
@@ -92,7 +100,8 @@ export class SignupModal extends Component {
 	  const email = form.elements.email.value;
 	  const password = form.elements.password.value;
 	  const course = form.elements.course.value;
-	  const instructor = true;
+	  const instructor = this.state.isInstructor;
+	  console.log(form.elements.ins.value);
 	  const user = { name,email,password,instructor,course };
 	  this.props.register(user);
 	  if (this.checkValidity() === true)
@@ -137,6 +146,13 @@ export class SignupModal extends Component {
               <Form.Control type="text" name="course" placeholder="Course" isValid={this.state.courseValid} isInvalid={!this.state.courseValid&&this.state.first} required />
               <Form.Control.Feedback type="invalid"> Please enter a Course Name! </Form.Control.Feedback> 
             </Form.Group>
+            <Form.Check
+              type={'checkbox'}
+	      name="ins"
+              label={'Instructor?'}
+	      onChange={this.handleCheckboxChange}
+            />
+
             <Button variant="primary" type="submit" disabled={isLoading}> {isLoading ? 'Loading...':'Submit'} </Button>
           </Form>
         </Modal.Body>

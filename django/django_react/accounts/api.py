@@ -2,6 +2,7 @@ from rest_framework import generics, permissions
 from rest_framework.response import Response
 from knox.models import AuthToken
 from .serializers import UserSerializer, RegisterSerializer, LoginSerializer
+from .models import CustomUser
 
 class RegAPI(generics.GenericAPIView):
   serializer_class = RegisterSerializer
@@ -35,3 +36,15 @@ class UserAPI(generics.RetrieveAPIView):
 
   def get_object(self):
     return self.request.user
+
+class InstructAPI (generics.ListAPIView):
+  permission_classes = [ permissions.AllowAny ]
+  serializer_class = UserSerializer
+
+  def get_queryset(self):
+    queryset = CustomUser.objects.all()
+    myreq=self.request.query_params.get('classNum')
+    if myreq:
+        return queryset.filter(course=myreq,instructor=True)
+    else:
+        return []

@@ -22,7 +22,14 @@ export class ProfileModal extends Component  {
     this.state = {
             show: props.show
     };
+    this.handleCheckboxChange = this.handleCheckboxChange.bind(this);
 
+  }
+
+  handleCheckboxChange(event) {
+    this.setState({
+        isInstructor: event.target.checked,
+    });
   }
 
   render() {
@@ -54,6 +61,32 @@ export class ProfileModal extends Component  {
           </Card.Header>
           <Accordion.Collapse eventKey="1">
             <Card.Body>{this.props.user.course} {this.props.user.instructor ? " (instructor)" : null}</Card.Body>
+          </Accordion.Collapse>
+        </Card>
+        <Card>
+          <Card.Header>
+            <Accordion.Toggle as={Button} variant="link" eventKey="2">
+              Add courses 
+            </Accordion.Toggle>
+          </Card.Header>
+          <Accordion.Collapse eventKey="2">
+            <Card.Body>
+              <Form onSubmit={this.handleSubmit}>
+	        <Form.Group controlId="formBasicText">
+	          <Form.Label> Course ID: </Form.Label>
+	          <Form.Control name="text" type="text" placeholder="Enter course" required/>
+                  <Form.Control.Feedback type="invalid"> {this.state.emailMessage} </Form.Control.Feedback> 
+	        </Form.Group>
+                <Form.Check
+                  type={'checkbox'}
+	          name="ins"
+                  label={'Instructor?'}
+	          onChange={this.handleCheckboxChange}
+                />
+	      <Button variant="primary" type="submit" disabled={this.props.isLoad}> {this.props.isLoad ? 'Loading...':'Add'} </Button>
+	    </Form>
+	    
+	    </Card.Body>
           </Accordion.Collapse>
         </Card>
       </Accordion>

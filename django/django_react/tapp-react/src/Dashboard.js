@@ -13,6 +13,7 @@ import PropTypes from 'prop-types';
 
 import TopBar from './topbar';
 import CalendarTab from './CalendarTab';
+import ProfileModal from './Profile';
 import Info from './Info';
 import { Link, Redirect } from "react-router-dom";
 import {loadCustomUser} from './actions/auth';
@@ -24,21 +25,27 @@ export class Dashboard extends Component{
     this.state = {
       Queues: false,
       Staff: false,
+      profile: false,
       Calendar: true
     };
   }
 
+  toggleProfile = () => {
+    this.setState({
+      profile: true
+    });
+  };
+
   render() { 
    const auth = this.props.isAuthenticated;
    const {authenticate, user} = this.props.authobj;
-   console.log(auth);
    if (!auth)
    {
     return <Redirect exact to="/" />
    }
     return (
     <div id="main2">
-    <TopBar />
+    <TopBar prof={() => this.setState({profile: true})}/>
     <Row className="align-middle justify-content-md-center"> 
     <h1 style={{color:"#f5f9e9"}} > Welcome to {user.course} , {user.email} </h1>
     </Row>
@@ -71,6 +78,7 @@ export class Dashboard extends Component{
         </Col>
     </Tab.Container>
     </Row>
+    <ProfileModal show={this.state.profile} onHide={() => this.setState({profile: false})} />
     </div>
     )
   }

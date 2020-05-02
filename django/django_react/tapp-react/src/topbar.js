@@ -32,10 +32,11 @@ export class TopBar extends Component{
   if (isAuthenticated){
     return (
     <Navbar style={{backgroundColor: '#36453b'}} variant="dark" expand="lg" fixed="top" fluid>
-      <Navbar.Brand>Tapp</Navbar.Brand>
+      <Navbar.Brand>TApp</Navbar.Brand>
       <Navbar.Toggle aria-controls="response-navbar-nav" />
       <Navbar.Collapse id="responsive-navbar-nav">
       <Nav className="ml-auto">
+      <Button variant="info" className="mx-2 ml-md-0" onClick={this.props.prof}> Profile </Button>
       <Link to="/">
           <Button variant="info" className="mx-2 ml-md-0" onClick={this.props.logout}> Logout </Button>
       </Link>

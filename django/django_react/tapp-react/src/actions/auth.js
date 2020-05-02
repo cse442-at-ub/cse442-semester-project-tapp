@@ -36,9 +36,12 @@ export const loadCustomUser = () => (dispatch, getState) => {
     });
 };
 
-export const patchCustomUser = () => (dispatch, getState) => {
+export const patchCustomUser = (listcourses) => (dispatch, getState) => {
+  const body = JSON.stringify({listcourses});
+  console.log("hello")
+
   axios
-    .get("/api/auth/user", tokenConfig(getState))
+    .patch("/api/auth/user", body, tokenConfig(getState))
     .then(res => {
       dispatch({
         type: ADD_CLASS,

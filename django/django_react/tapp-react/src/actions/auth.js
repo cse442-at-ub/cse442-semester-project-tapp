@@ -9,6 +9,7 @@ import {
   LOGIN_FAIL,
   LOGOUT_SUCCESS,
   REGISTER_SUCCESS,
+  ADD_CLASS,
   REGISTER_FAIL
 } from "./types";
 
@@ -25,6 +26,22 @@ export const loadCustomUser = () => (dispatch, getState) => {
     .then(res => {
       dispatch({
         type: USER_LOADED,
+        payload: res.data
+      });
+    })
+    .catch(err => {
+      dispatch({
+        type: AUTH_ERROR
+      });
+    });
+};
+
+export const patchCustomUser = () => (dispatch, getState) => {
+  axios
+    .get("/api/auth/user", tokenConfig(getState))
+    .then(res => {
+      dispatch({
+        type: ADD_CLASS,
         payload: res.data
       });
     })

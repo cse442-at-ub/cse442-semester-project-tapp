@@ -78,7 +78,7 @@ export class Dashboard extends Component{
         </Col>
     </Tab.Container>
     </Row>
-    <ProfileModal show={this.state.profile} onHide={() => this.setState({profile: false})} />
+    <ProfileModal user={user} show={this.state.profile} onHide={() => this.setState({profile: false})} />
     </div>
     )
   }

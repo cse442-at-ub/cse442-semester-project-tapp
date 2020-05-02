@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
+import Accordion from 'react-bootstrap/Accordion';
+import Card from 'react-bootstrap/Card';
 import Modal from 'react-bootstrap/Modal';
 import Alert from 'react-bootstrap/Alert';
 import PropTypes from 'prop-types';
@@ -23,26 +25,6 @@ export class ProfileModal extends Component  {
 
   }
 
-  handleSubmit = event => {
-	  const form = 
-		  event.currentTarget;
-	  if (form.checkValidity() === false) { event.preventDefault(); event.stopPropagation();}
-	  else{
-            event.preventDefault()
-            this.setState({passValid: true, passMessage:""})
-	    this.toggleSignedUp(true);
-	    this.props.login(form.elements.email.value, form.elements.password.value);
-	    if(!this.props.isAuth && !this.props.isLoad) {
-	      this.toggleLoginAlertFail(true);
-	    }
-	  }
-	  if (this.checkValidity() === true)
-          {
-	    this.toggleSignedUp();
-	    this.toggleSignedValid(true);
-	  }
-  };
-
   render() {
   return (
     <Modal onHide = {this.props.onHide} show = {this.props.show} size="lg" centered>
@@ -50,6 +32,31 @@ export class ProfileModal extends Component  {
         <Modal.Title> Profile </Modal.Title>
       </Modal.Header>
       <Modal.Body>
+      <Accordion>
+        <Card>
+          <Card.Header>
+            <Accordion.Toggle as={Button} variant="link" eventKey="0">
+              Personal information
+            </Accordion.Toggle>
+          </Card.Header>
+          <Accordion.Collapse eventKey="0">
+            <Card.Body>
+	      <p>Name: {this.props.user.name} </p>
+	      <p> Email ID: {this.props.user.email} </p>
+	    </Card.Body>
+          </Accordion.Collapse>
+        </Card>
+        <Card>
+          <Card.Header>
+            <Accordion.Toggle as={Button} variant="link" eventKey="1">
+              Course enrolled in 
+            </Accordion.Toggle>
+          </Card.Header>
+          <Accordion.Collapse eventKey="1">
+            <Card.Body>{this.props.user.course} {this.props.user.instructor ? " (instructor)" : null}</Card.Body>
+          </Accordion.Collapse>
+        </Card>
+      </Accordion>
       </Modal.Body>
       <Modal.Footer>
         <Button onClick={this.props.onHide}> Close </Button>
@@ -61,9 +68,6 @@ export class ProfileModal extends Component  {
 
 ProfileModal.propTypes = {
         login: PropTypes.func.isRequired,
-        isLoading: PropTypes.bool,
-        isAuth: PropTypes.bool,
-        error: PropTypes.object.isRequired
 }
 
 const mapStateToProps = state => ({

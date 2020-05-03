@@ -45,7 +45,7 @@ export class Dashboard extends Component{
    }
     return (
     <div id="main2">
-    <TopBar prof={() => this.setState({profile: true})}/>
+    <TopBar prof={() => this.setState({profile: true})} myuser={user}/>
     <Row className="align-middle justify-content-md-center"> 
     <h1 style={{color:"#f5f9e9"}} > Welcome to {user.course} , {user.email} </h1>
     </Row>

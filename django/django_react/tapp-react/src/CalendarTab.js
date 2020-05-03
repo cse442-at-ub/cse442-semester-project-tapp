@@ -82,7 +82,7 @@ export class CalendarTab extends Component{
   }
 
 
-  componentDidMount() {
+  componentDidUpdate() {
     if(this.props.course != null)
     {
       this.props.getEvents(this.props.course);

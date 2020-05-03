@@ -29,7 +29,7 @@ export class Info extends Component{
     };
   }
 
-  componentDidMount() {
+  componentDidUpdate() {
     if(this.props.course != null)
     {
       this.props.getInstructors(this.props.course);

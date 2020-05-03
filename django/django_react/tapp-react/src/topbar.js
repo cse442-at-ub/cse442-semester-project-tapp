@@ -11,6 +11,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import "./styles.css";
 import PropTypes from 'prop-types';
 import { logout } from './actions/auth';
+import { changeDefault } from './actions/auth';
 import { connect } from 'react-redux';
 
 export class TopBar extends Component{
@@ -43,7 +44,8 @@ export class TopBar extends Component{
 	    {
               Object.keys(userlist).map((id,instr) => (
 		(this.props.myuser.course===id) ?
-	        null :<Dropdown.Item > {id} </Dropdown.Item> 
+	        null :<Dropdown.Item onClick={() => this.props.changeDefault(id, userlist[id])}> {id} </Dropdown.Item> 
+	    
 	      ))
 	    }
       </DropdownButton>
@@ -61,10 +63,11 @@ export class TopBar extends Component{
 
 TopBar.propTypes = {
   auth: PropTypes.object.isRequired,
+  changeDefault: PropTypes.object.isRequired,
   logout: PropTypes.func.isRequired};
 
 const mapStateToProps = state => ({
   auth: state.auth
 });
 
-export default connect(mapStateToProps, { logout }) (TopBar);
+export default connect(mapStateToProps, { logout, changeDefault }) (TopBar);

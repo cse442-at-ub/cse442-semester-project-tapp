@@ -6,6 +6,7 @@ import {
   LOGIN_FAIL,
   LOGOUT_SUCCESS,
   REGISTER_SUCCESS,
+  ADD_CLASS,
   REGISTER_FAIL
 } from "../actions/types";
 
@@ -50,6 +51,11 @@ export default function(state = initialState, action) {
         user: null,
         isAuthenticated: false,
         isLoading: false
+      };
+    case ADD_CLASS:
+      return {
+        ...state,
+        user: action.payload
       };
     default:
       return state;

@@ -5,6 +5,7 @@ import Accordion from 'react-bootstrap/Accordion';
 import Card from 'react-bootstrap/Card';
 import Modal from 'react-bootstrap/Modal';
 import Alert from 'react-bootstrap/Alert';
+import ListGroup from 'react-bootstrap/ListGroup';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { getStudents } from './actions/students';
@@ -61,43 +62,47 @@ export class ProfileModal extends Component  {
         <Card>
           <Card.Header>
             <Accordion.Toggle as={Button} variant="link" eventKey="0">
-              Personal information
+              Personal Information
             </Accordion.Toggle>
           </Card.Header>
           <Accordion.Collapse eventKey="0">
             <Card.Body>
-	      <p>Name: {this.props.user.name} </p>
-	      <p> Email ID: {this.props.user.email} </p>
+	    <ListGroup variant="flush">
+	      <ListGroup.Item><b>Name:</b> {this.props.user.name} </ListGroup.Item>
+	      <ListGroup.Item> <b>Email ID:</b> {this.props.user.email} </ListGroup.Item>
+	    </ListGroup>
 	    </Card.Body>
           </Accordion.Collapse>
         </Card>
         <Card>
           <Card.Header>
             <Accordion.Toggle as={Button} variant="link" eventKey="1">
-              Course enrolled in 
+              Courses Enrolled  
             </Accordion.Toggle>
           </Card.Header>
           <Accordion.Collapse eventKey="1">
             <Card.Body>
+	    <ListGroup variant="flush">
 	    {
               Object.keys(mycourselist).map((id,instr) => (
-	        <p> {id} {mycourselist[id] ? <b> (instructor)</b> : null}</p>
+	        <ListGroup.Item> {id} {mycourselist[id] ? <b> (instructor)</b> : null}</ListGroup.Item>
 	      ))
 	    }
+	    </ListGroup>
             </Card.Body>
           </Accordion.Collapse>
         </Card>
         <Card>
           <Card.Header>
             <Accordion.Toggle as={Button} variant="link" eventKey="2">
-              Add courses 
+              Add Course 
             </Accordion.Toggle>
           </Card.Header>
           <Accordion.Collapse eventKey="2">
             <Card.Body>
               <Form onSubmit={this.handleSubmit}>
 	        <Form.Group controlId="formBasicText">
-	          <Form.Label> Course ID: </Form.Label>
+	          <Form.Label> <b>Course ID: </b> </Form.Label>
 	          <Form.Control name="course" type="text" placeholder="Enter course" required/>
                   <Form.Control.Feedback type="invalid"> {this.state.emailMessage} </Form.Control.Feedback> 
 	        </Form.Group>

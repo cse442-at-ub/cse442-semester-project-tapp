@@ -71,7 +71,7 @@ export class Dashboard extends Component{
 	    <CalendarTab course={user.course} instruct={user.instructor} name={user.name} usr={user} />
             </Tab.Pane>
             <Tab.Pane eventKey="Queues">
-	    <QueueTab />
+	    <QueueTab course={user.course}/>
             </Tab.Pane>
             <Tab.Pane eventKey="Info">
 	    <Info course={user.course}/>

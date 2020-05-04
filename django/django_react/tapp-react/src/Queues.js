@@ -9,7 +9,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { getStudents } from './actions/students';
 import { login } from './actions/auth';
-import { addQueue } from './actions/queues';
+import { getQueues, addQueue } from './actions/queues';
 import { Link } from "react-router-dom";
 
 import 'bootstrap/dist/css/bootstrap.min.css'
@@ -33,13 +33,30 @@ export class QueueTab extends Component  {
     });
   }
 
+  componentDidMount(prevProps, prevState) {
+    if(this.props.course != null)
+    {
+      this.props.getQueues(this.props.course);
+      ;
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if(this.props.course != null && (this.props.course != prevProps.course ))
+    {
+      this.props.getQueues(this.props.course);
+      ;
+    }
+  }
+
   handleSubmit = event => {
 	  const form = event.currentTarget;
 	  //if (this.checkValidity() === false) { event.preventDefault(); event.stopPropagation();}
 	  //else{
           event.preventDefault();
 	  const topic = form.elements.course.value;
-	  this.props.addQueue({	queue: "[]", classNum: "CSE396", title: topic});
+	  if(this.props.course)
+	  this.props.addQueue({	queue: "[]", classNum: this.props.course, title: topic});
   };
 
   render() {
@@ -48,13 +65,20 @@ export class QueueTab extends Component  {
         <Card>
           <Card.Header>
             <Accordion.Toggle as={Button} variant="link" eventKey="1">
-              Courses Enrolled  
+              Open Queues for your class
             </Accordion.Toggle>
           </Card.Header>
           <Accordion.Collapse eventKey="1">
             <Card.Body>
-	    <ListGroup variant="flush">
-	    </ListGroup>
+	      <ListGroup variant="flush">
+	        {
+                  this.props.queues.map((id) => (
+	            <ListGroup.Item>
+	                 <Button> {id.title}: </Button>
+	            </ListGroup.Item>
+	          ))
+	        }
+	      </ListGroup>
             </Card.Body>
           </Accordion.Collapse>
         </Card>
@@ -84,10 +108,13 @@ export class QueueTab extends Component  {
 }
 
 QueueTab.propTypes = {
+        queues: PropTypes.array.isRequired,
         addQueue: PropTypes.func.isRequired,
+        getQueues: PropTypes.func.isRequired
 }
 
 const mapStateToProps = state => ({
+	queues: state.queues.queues
 });
 
-export default connect(mapStateToProps, {addQueue})(QueueTab);
+export default connect(mapStateToProps, {getQueues, addQueue})(QueueTab);

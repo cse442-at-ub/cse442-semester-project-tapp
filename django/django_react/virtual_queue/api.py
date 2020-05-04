@@ -39,6 +39,26 @@ class QueueUpdateView(generics.RetrieveUpdateAPIView):
     oh_obj = self.get_object(pk)
     serial = OHQueueSerializer(oh_obj, data=request.data, partial = True)
     if serial.is_valid():
+      print("serial is valid")
       serial.save()
       return Response(serial.data)
     return JsonResponse(code=400, data="OOK OOK OOK OOK OOK OOK OOK OOK")
+
+class QueueDeleteView(generics.GenericAPIView):
+    serializer_class = OHQueueSerializer
+    def get_object(self, pk):
+      return OHQueue.objects.get(pk=pk)
+
+    def delete(self, request, *args, **kwargs):
+      try:
+        pk = self.kwargs.get("pk")
+        oh_obj = self.get_object(pk)
+        oh_obj.delete()
+        return Response({
+          "msg": "Success!"
+        })
+      except:
+        return Response({
+          "msg": "Failed to Delete Queue!",
+          "msg2": "Double check url and queue id, and try again!"
+        })  

@@ -9,6 +9,7 @@ import {
   LOGIN_FAIL,
   LOGOUT_SUCCESS,
   REGISTER_SUCCESS,
+  ADD_CLASS,
   REGISTER_FAIL
 } from "./types";
 
@@ -25,6 +26,42 @@ export const loadCustomUser = () => (dispatch, getState) => {
     .then(res => {
       dispatch({
         type: USER_LOADED,
+        payload: res.data
+      });
+    })
+    .catch(err => {
+      dispatch({
+        type: AUTH_ERROR
+      });
+    });
+};
+
+export const patchCustomUser = (listcourses) => (dispatch, getState) => {
+  const body = JSON.stringify({listcourses});
+
+  axios
+    .patch("/api/auth/user", body, tokenConfig(getState))
+    .then(res => {
+      dispatch({
+        type: ADD_CLASS,
+        payload: res.data
+      });
+    })
+    .catch(err => {
+      dispatch({
+        type: AUTH_ERROR
+      });
+    });
+};
+
+export const changeDefault = (course, instructor) => (dispatch, getState) => {
+  const body = JSON.stringify({course, instructor});
+
+  axios
+    .patch("/api/auth/user", body, tokenConfig(getState))
+    .then(res => {
+      dispatch({
+        type: ADD_CLASS,
         payload: res.data
       });
     })

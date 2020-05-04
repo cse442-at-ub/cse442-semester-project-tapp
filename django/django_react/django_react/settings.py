@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'accounts',
     'frontend',
     'rest_framework',
+    'virtual_queue',
     'officehours'
 ]
 

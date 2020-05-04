@@ -8,6 +8,7 @@ class CustomUser(AbstractUser):
     instructor = models.BooleanField(('Instructor'))
     name = models.TextField(('Name'), default="Matthew Hertz")
     course = models.TextField(('Course'), default="CSE442")
+    listcourses = models.TextField(('listcourses'), default="")
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []

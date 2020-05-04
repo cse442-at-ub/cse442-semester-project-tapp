@@ -17,3 +17,6 @@ urlpatterns.append(
 urlpatterns.append(
     path('',include('officehours.urls'))
 )
+
+urlpatterns.append(
+    path('',include('virtual_queue.urls')))

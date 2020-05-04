@@ -1,5 +1,6 @@
 from rest_framework import generics, permissions
 from rest_framework.response import Response
+from django.http import JsonResponse
 from knox.models import AuthToken
 from .serializers import UserSerializer, RegisterSerializer, LoginSerializer
 from .models import CustomUser
@@ -30,12 +31,20 @@ class LogAPI(generics.GenericAPIView):
       "token": token
     })
 
-class UserAPI(generics.RetrieveAPIView):
+class UserAPI(generics.RetrieveUpdateAPIView):
   permission_classes = [ permissions.IsAuthenticated ]
   serializer_class = UserSerializer
 
   def get_object(self):
     return self.request.user
+
+  def patch(self, request):
+    temp = self.request.user
+    serializer = UserSerializer(temp, data=request.data, partial=True)
+    if serializer.is_valid():
+      serializer.save()
+      return Response(serializer.data)
+    return JsonResponse(code=400, data="OOK OOK OOK OOK OOK OOK OOK OOK")
 
 class InstructAPI (generics.ListAPIView):
   permission_classes = [ permissions.AllowAny ]

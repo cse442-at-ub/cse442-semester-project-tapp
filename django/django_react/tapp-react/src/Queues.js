@@ -9,7 +9,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { getStudents } from './actions/students';
 import { login } from './actions/auth';
-import { patchCustomUser } from './actions/auth';
+import { addQueue } from './actions/queues';
 import { Link } from "react-router-dom";
 
 import 'bootstrap/dist/css/bootstrap.min.css'
@@ -38,13 +38,8 @@ export class QueueTab extends Component  {
 	  //if (this.checkValidity() === false) { event.preventDefault(); event.stopPropagation();}
 	  //else{
           event.preventDefault();
-	  const instructor = this.state.isInstructor;
-	  const course = form.elements.course.value;
-	  var json = JSON.parse(this.props.user.listcourses)
-	  if (!Object.keys(json).includes(course)) {
-	    json[course]=instructor
-	    this.props.patchCustomUser(JSON.stringify(json))
-	  }
+	  const topic = form.elements.course.value;
+	  this.props.addQueue({	queue: "[]", classNum: "CSE396", title: topic});
   };
 
   render() {
@@ -89,10 +84,10 @@ export class QueueTab extends Component  {
 }
 
 QueueTab.propTypes = {
-        patchCustomUser: PropTypes.func.isRequired,
+        addQueue: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = state => ({
 });
 
-export default connect(mapStateToProps, {patchCustomUser})(QueueTab);
+export default connect(mapStateToProps, {addQueue})(QueueTab);

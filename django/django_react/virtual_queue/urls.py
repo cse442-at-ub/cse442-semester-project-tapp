@@ -1,6 +1,7 @@
 from django.urls import path, include
 from .api import OHQueueViewSet
+from rest_framework import routers
 
-urlpatterns = [
-        path('api/officeHours', OHQueueViewSet.as_view({'get': 'list','post':'create'}), name='Event list')
-]
+router = routers.DefaultRouter()
+router.register('api/officeHours', OHQueueViewSet, basename="officeHours")
+urlpatterns = router.urls

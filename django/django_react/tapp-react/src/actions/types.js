@@ -12,3 +12,6 @@ export const LOGOUT_SUCCESS = "LOGOUT_SUCCESS";
 export const REGISTER_SUCCESS = "REGISTER_SUCCESS";
 export const REGISTER_FAIL = "REGISTER_FAIL";
 export const ADD_CLASS = "ADD_CLASS";
+export const ADD_QUEUE = "ADD_QUEUE";
+export const DELETE_QUEUE = "DELETE_QUEUE";
+export const GET_QUEUES = "GET_QUEUES";

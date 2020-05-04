@@ -28,9 +28,16 @@ export class Info extends Component{
       Calendar: true
     };
   }
+  componentDidMount(prevProps, prevState) {
+    if(this.props.course != null )
+    {
+      this.props.getInstructors(this.props.course);
+      ;
+    }
+  }
 
-  componentDidUpdate() {
-    if(this.props.course != null)
+  componentDidUpdate(prevProps, prevState) {
+    if(this.props.course != null && (this.props.course != prevProps.course))
     {
       this.props.getInstructors(this.props.course);
       ;

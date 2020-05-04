@@ -13,6 +13,7 @@ import PropTypes from 'prop-types';
 
 import TopBar from './topbar';
 import CalendarTab from './CalendarTab';
+import QueueTab from './Queues';
 import ProfileModal from './Profile';
 import Info from './Info';
 import { Link, Redirect } from "react-router-dom";
@@ -70,6 +71,7 @@ export class Dashboard extends Component{
 	    <CalendarTab course={user.course} instruct={user.instructor} name={user.name} usr={user} />
             </Tab.Pane>
             <Tab.Pane eventKey="Queues">
+	    <QueueTab />
             </Tab.Pane>
             <Tab.Pane eventKey="Info">
 	    <Info course={user.course}/>

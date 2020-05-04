@@ -81,9 +81,16 @@ export class CalendarTab extends Component{
     this.onChangeTopic = this.onChangeTopic.bind(this);
   }
 
-
-  componentDidUpdate() {
+  componentDidMount(prevProps, prevState) {
     if(this.props.course != null)
+    {
+      this.props.getEvents(this.props.course);
+      ;
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if(this.props.course != null && (this.props.course != prevProps.course ))
     {
       this.props.getEvents(this.props.course);
       ;
@@ -238,6 +245,7 @@ Calendar.propTypes = {
 
 const mapStateToProps = state => ({
   events: state.students.events,
+  myuser: state.auth.user
 });
 
 export default connect(mapStateToProps, {getEvents, addEvent, deleteEvent} )(CalendarTab);

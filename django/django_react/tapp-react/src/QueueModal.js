@@ -26,6 +26,7 @@ export class QueueModal extends Component  {
     };
     this.handlePush = this.handlePush.bind(this);
     this.handlePop = this.handlePop.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
   }
 
   handlePop = () => {
@@ -36,6 +37,14 @@ export class QueueModal extends Component  {
 	    json.shift()
 	    this.props.patch(myq.id, JSON.stringify(json))
   	  };
+  }
+
+  handleDelete = () => {
+	  const course = this.props.user.email;
+          const myq = this.props.queues.find((x) => x.id === this.props.details) 
+	  this.props.qdelete(myq.id);
+	  console.log("hello");
+   	  this.props.onHide();
   }
 
   handlePush = () => {
@@ -61,7 +70,11 @@ export class QueueModal extends Component  {
 	        {
                   JSON.parse(myq.queue).map((id) => (
 	            <ListGroup.Item>
-			  {(id === this.props.user.email) ? this.props.user.name : "(Anonymous)" }
+			  {
+			    this.props.user.instructor ?
+			    id :
+			    ((id === this.props.user.email) ? this.props.user.name : "(Anonymous)") 
+			  }
 	            </ListGroup.Item>
 	          ))
 	        }
@@ -70,10 +83,11 @@ export class QueueModal extends Component  {
       <Modal.Footer>
 	{
 	  !this.props.user.instructor?
-          (<Button onClick = {this.handlePush} > Join Queue </Button>) : 
-          (<Button onClick = {this.handlePop} > Pop Top </Button>)
+          (
+     	   <Button onClick = {this.handlePush} > Join Queue </Button>) : 
+          (<><Button onClick = {this.handlePop} > Pop Top </Button>
+	   <Button onClick = {this.handleDelete} > Close Queue </Button></>)
 	}
-        <Button> Refresh </Button>
         <Button onClick={this.props.onHide}> Close </Button>
       </Modal.Footer>
     </Modal>

@@ -10,7 +10,7 @@ import { connect } from 'react-redux';
 import { getStudents } from './actions/students';
 import { login } from './actions/auth';
 import { QueueModal } from './QueueModal.js';
-import { getQueues, addQueue, pQueue } from './actions/queues';
+import { deleteQueue, getQueues, addQueue, pQueue } from './actions/queues';
 import { Link } from "react-router-dom";
 
 import 'bootstrap/dist/css/bootstrap.min.css'
@@ -64,7 +64,14 @@ export class QueueTab extends Component  {
   render() {
   return (
       <Accordion>
-      <QueueModal queues={this.props.queues} patch={this.props.pQueue} user={this.props.use} details={this.state.details} show={this.state.modal} onHide={() => this.setState({details:-1,modal: false})} />
+      <QueueModal 
+	  queues={this.props.queues} 
+	  qdelete={this.props.deleteQueue} 
+	  patch={this.props.pQueue} 
+	  user={this.props.use} 
+	  details={this.state.details} 
+	  show={this.state.modal} 
+	  onHide={() => this.setState({details:-1,modal: false})} />
         <Card>
           <Card.Header>
             <Accordion.Toggle as={Button} variant="link" eventKey="1">
@@ -75,11 +82,13 @@ export class QueueTab extends Component  {
             <Card.Body>
 	      <ListGroup variant="flush">
 	        {
+		 this.props.queues.length > 0 ?
+	 	 (
                   this.props.queues.map((id) => (
 	            <ListGroup.Item>
-	                 <Button onClick={() => this.setState({modal: true, details: id.id})}> {id.title}: </Button>
+	                 <Button onClick={() => this.setState({modal: true, details: id.id})}> {id.title} </Button>
 	            </ListGroup.Item>
-	          ))
+	          ))) : "No queues open currently."
 	        }
 	      </ListGroup>
             </Card.Body>
@@ -114,6 +123,7 @@ export class QueueTab extends Component  {
 QueueTab.propTypes = {
         queues: PropTypes.array.isRequired,
         addQueue: PropTypes.func.isRequired,
+        deleteQueue: PropTypes.func.isRequired,
         pQueue: PropTypes.func.isRequired,
         getQueues: PropTypes.func.isRequired
 }
@@ -122,4 +132,4 @@ const mapStateToProps = state => ({
 	queues: state.queues.queues
 });
 
-export default connect(mapStateToProps, {getQueues, addQueue, pQueue})(QueueTab);
+export default connect(mapStateToProps, {deleteQueue, getQueues, addQueue, pQueue})(QueueTab);

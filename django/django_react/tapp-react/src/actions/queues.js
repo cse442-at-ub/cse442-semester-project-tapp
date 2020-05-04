@@ -46,7 +46,7 @@ export const pQueue = (id,queue) => dispatch => {
 
 export const deleteQueue = (id) => dispatch => {
   axios	
-  .delete('/api/officeHours/'+id.toString()+'/')
+  .delete('/api/officeHours/Delete/'+id.toString()+'/')
   .then(res => {
   dispatch({
     type: DELETE_QUEUE,

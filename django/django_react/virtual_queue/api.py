@@ -61,4 +61,4 @@ class QueueDeleteView(generics.GenericAPIView):
         return Response({
           "msg": "Failed to Delete Queue!",
           "msg2": "Double check url and queue id, and try again!"
-        })  
+        })

@@ -9,8 +9,6 @@ from .models import OHQueue
 
 class OHQueueViewSet(generics.ListAPIView):
         serializer_class = OHQueueSerializer
-        
-
         def get_queryset(self):
           queryset = OHQueue.objects.all()
           myreq=self.request.query_params.get('classNum')
@@ -29,16 +27,18 @@ class OHQueueViewPost(generics.GenericAPIView):
 
 
 class QueueUpdateView(generics.RetrieveUpdateAPIView):
-  
   serializer_class = OHQueueSerializer
+
   def get_object(self, pk):
     return OHQueue.objects.get(pk=pk)
-  
+
   def patch(self,request, *args, **kwargs):
     pk = self.kwargs.get('pk')
     oh_obj = self.get_object(pk)
+    print(request.data)
     serial = OHQueueSerializer(oh_obj, data=request.data, partial = True)
     if serial.is_valid():
       serial.save()
+      print(serial.data)
       return Response(serial.data)
     return JsonResponse(code=400, data="OOK OOK OOK OOK OOK OOK OOK OOK")

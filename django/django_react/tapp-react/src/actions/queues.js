@@ -1,9 +1,9 @@
 import axios from 'axios';
-import { GET_QUEUES, ADD_QUEUE, DELETE_QUEUE, GET_ERRORS } from './types';
+import { UP_QUEUE, GET_QUEUES, ADD_QUEUE, DELETE_QUEUE, GET_ERRORS } from './types';
 
 //GET STUDENTS
 export const getQueues = (param) => dispatch => {
-  axios.get('/api/officeHours?classNum='+param)
+  axios.get('/api/officeHours/Get?classNum='+param)
   .then(res => {
     dispatch({
       type: GET_QUEUES,
@@ -16,7 +16,7 @@ export const getQueues = (param) => dispatch => {
 //ADD USER
 export const addQueue = queues => dispatch => {
   axios	
-  .post('/api/officeHours/', queues)
+  .post('/api/officeHours/Post', queues)
   .then(res => {
   dispatch({
     type: ADD_QUEUE,
@@ -29,6 +29,19 @@ export const addQueue = queues => dispatch => {
     payload: err
     });
   });
+};
+
+
+export const pQueue = (id,queue) => dispatch => {
+  const body = {"queue":queue};
+  axios
+    .patch("/api/officeHours/Update/"+id+"/",body)
+    .then(res => {
+      dispatch({
+        type: UP_QUEUE,
+        payload: res.data
+      });
+    })
 };
 
 export const deleteQueue = (id) => dispatch => {
@@ -47,3 +60,4 @@ export const deleteQueue = (id) => dispatch => {
     });
   });
 };
+

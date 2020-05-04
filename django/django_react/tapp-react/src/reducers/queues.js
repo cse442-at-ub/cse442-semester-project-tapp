@@ -1,4 +1,4 @@
-import {GET_QUEUES, GET_INSTR, ADD_QUEUE, DELETE_QUEUE} from "../actions/types.js"
+import {UP_QUEUE,GET_QUEUES, GET_INSTR, ADD_QUEUE, DELETE_QUEUE} from "../actions/types.js"
 
 const initialState = {
   queues: [],
@@ -20,6 +20,10 @@ export default function(state=initialState, action) {
       return {
       ...state,
       queues: [...state.queues, action.payload]};
+    case UP_QUEUE:
+      return {
+      ...state,
+      queues: state.queues.map((x) => (x.id===action.payload.id) ? action.payload : x)};
     default: return state
   }
 }

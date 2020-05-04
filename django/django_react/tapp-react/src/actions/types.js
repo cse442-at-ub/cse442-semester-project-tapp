@@ -15,3 +15,4 @@ export const ADD_CLASS = "ADD_CLASS";
 export const ADD_QUEUE = "ADD_QUEUE";
 export const DELETE_QUEUE = "DELETE_QUEUE";
 export const GET_QUEUES = "GET_QUEUES";
+export const UP_QUEUE = "UP_QUEUE";

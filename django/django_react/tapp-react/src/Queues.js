@@ -85,7 +85,8 @@ export class QueueTab extends Component  {
             </Card.Body>
           </Accordion.Collapse>
         </Card>
-        <Card>
+	{ this.props.use.instructor ? 
+        (<Card>
           <Card.Header>
             <Accordion.Toggle as={Button} variant="link" eventKey="2">
               Make Queue 
@@ -101,10 +102,10 @@ export class QueueTab extends Component  {
 	        </Form.Group>
 	      <Button variant="primary" type="submit" disabled={this.props.isLoad}> {this.props.isLoad ? 'Loading...':'Submit'} </Button>
 	    </Form>
-	    
 	    </Card.Body>
           </Accordion.Collapse>
-        </Card>
+        </Card>) : null
+	  }
       </Accordion>
   );
   }

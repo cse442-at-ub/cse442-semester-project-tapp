@@ -54,7 +54,7 @@ export class QueueModal extends Component  {
   return (
     <Modal onHide = {this.props.onHide} show = {this.props.show} size="lg" centered>
       <Modal.Header closeButton>
-        <Modal.Title> myq.title </Modal.Title>
+        <Modal.Title> {myq.title} </Modal.Title>
       </Modal.Header>
       <Modal.Body>
 	  <ListGroup>
@@ -68,8 +68,11 @@ export class QueueModal extends Component  {
 	  </ListGroup>
       </Modal.Body>
       <Modal.Footer>
-        <Button onClick = {this.handlePush} > Join Queue </Button>
-        <Button onClick = {this.handlePop} > Pop Top </Button>
+	{
+	  !this.props.user.instructor?
+          (<Button onClick = {this.handlePush} > Join Queue </Button>) : 
+          (<Button onClick = {this.handlePop} > Pop Top </Button>)
+	}
         <Button> Refresh </Button>
         <Button onClick={this.props.onHide}> Close </Button>
       </Modal.Footer>
